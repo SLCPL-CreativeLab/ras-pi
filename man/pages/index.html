@@ -1,14 +1,339 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>SLC Public Library - Raspberry Pi Guide</title>
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi & Linux Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.75em;
+        }
+        h3 {
+            font-size: 1.5em;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .image-container {
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 
-    <body>
-        <h1>SLC Public Library - Raspberry Pi Guide</h1>
+<h1>Raspberry Pi & Linux Guide</h1>
 
-        <p>Welcome to the Raspberry Pi Guide! This guide will help you get started with your Raspberry Pi and learn how to use it.</p>
-        <p class="code">Code example</p>
-    </body>
+<h2>I - What is a Raspberry Pi and Linux?</h2>
+
+<h3>Raspberry Pi</h3>
+
+<h4>What is it?</h4>
+<p><a href="https://en.wikipedia.org/wiki/Raspberry_Pi">The Raspberry Pi</a> is a series of small, affordable, single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in collaboration with Broadcom. It’s designed to promote teaching basic computer science and to provide an accessible platform for hobbyists, educators, and students to explore computing, learn programming, and work on various digital projects.</p>
+
+<h4>Raspberry Pi Projects</h4>
+<p><a href="https://projects.raspberrypi.org/">Raspberry Pi projects</a> range from simple learning tools to complex systems. Some popular project ideas include:</p>
+<ul>
+    <li><a href="https://projects.raspberrypi.org/">Coding and Computing</a>: Using Raspberry Pi to learn programming languages like Python and Scratch.</li>
+    <li>Home Automation: Creating smart home devices that can control lighting, temperature, or security systems.</li>
+    <li>Retro Gaming: Building a retro gaming console to play classic games.</li>
+    <li><a href="https://www.tomshardware.com/features/best-raspberry-pi-projects">Robotics</a>: Designing robots that can perform various tasks or respond to the environment.</li>
+    <li>Media Centers: Setting up a media server to stream videos and music throughout your home.</li>
+</ul>
+
+<h4>Raspberry Pi Documentation</h4>
+<p>To read more about the Raspberry Pi, you can visit the official Raspberry Pi website or explore its Wikipedia page for detailed information on its history, models, and specifications. Additionally, there are numerous online communities and forums where Raspberry Pi enthusiasts share their projects and offer support.</p>
+
+<h3>Linux</h3>
+
+<h4>What is Linux?</h4>
+<ul>
+    <li>Linux is an open-source operating system (OS) that has been around since the mid-1990s. It’s part of the Unix-like family of OSes.</li>
+    <li>Unlike proprietary systems like Windows or macOS, Linux is freely redistributable, which means anyone can create their own distribution (distro) for any purpose.</li>
+    <li>The core of Linux is the Linux kernel, which manages the CPU, memory, and peripheral devices. However, when people refer to “Linux,” they often mean the entire OS, including additional software and tools.</li>
+    <li>Linux is everywhere: from smartphones and cars to supercomputers and home appliances. It powers most of the Internet, top supercomputers, and stock exchanges.</li>
+    <li>Android, one of the most popular platforms globally, is also based on the Linux kernel.</li>
+</ul>
+
+<h4>Why does the Pi use Linux?</h4>
+<ul>
+    <li>The Raspberry Pi Foundation has a unique mission: to help young people learn how to use computers and improve their tech skills.</li>
+    <li>They created the Raspberry Pi, an affordable computer (costing less than $50) that can be used in schools. It helps students become more confident with computers and learn programming.</li>
+    <li>However, the Raspberry Pi is different from traditional computers, so a specialized OS was needed. That’s where Raspberry Pi OS (formerly Raspbian) comes in.</li>
+    <li>Raspberry Pi OS is a lightweight Linux distribution designed specifically for Raspberry Pi. It achieves the foundation’s goals by providing a compatible and user-friendly environment for learning and development.</li>
+</ul>
+
+<h2>II - How to use Linux</h2>
+
+<h3>Installation</h3>
+<p>Install the Raspberry Pi Imager on a computer. This is used to install a .iso file to an SD card or MicroSD card (depending on your Raspberry Pi model). Launch the application and you’ll see the following buttons:</p>
+<div class="image-container">
+    <img src="image1.jpg" alt="Raspberry Pi Imager Interface">
+</div>
+<p>Select your Raspberry Pi device and the storage device connected to your computer.</p>
+
+<p>For the Operating System, if you have a Raspberry Pi 3 or newer, the top option should be OK. Anything older, and you should choose Raspberry Pi OS (Legacy, 32-bit) Lite. Note that this will not install a Desktop Environment (DE), which means everything you’ll do is through the terminal. That might sound scary, but don’t worry. This guide will go over everything you need to know to hit the ground running.</p>
+
+<p>Once you hit next, you should see the popup below:</p>
+<div class="image-container">
+    <img src="image2.jpg" alt="Raspberry Pi Imager Popup">
+</div>
+
+<p>Click <strong>EDIT SETTINGS</strong> and <strong>Set username and password</strong>. This is the only setting you <em>should</em> set, but others are available, such as enabling SSH (Secure Shell protocol). For the time being, let’s skip those since they’re not strictly necessary.</p>
+<div class="image-container">
+    <img src="image3.jpg" alt="Raspberry Pi Settings Edit">
+</div>
+
+<p>Now, wait until the installation is complete!</p>
+<div class="image-container">
+    <img src="image4.jpg" alt="Raspberry Pi Installation Progress">
+</div>
+
+<h3>SSH vs. Local</h3>
+<p>Using a Raspberry Pi with Linux can be experienced in two distinct ways: through SSH (Secure Shell) or locally by connecting a display directly to the Pi. Here’s a comparison of both methods:</p>
+
+<h4>Using SSH:</h4>
+<ul>
+    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Remote Access</a>: SSH allows you to control your Raspberry Pi from another computer on the same network or even over the internet.</li>
+    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Headless Operation</a>: Ideal for running the Raspberry Pi without a monitor, keyboard, or mouse—useful for servers or embedded projects.</li>
+    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Convenience</a>: Manage your Pi from the comfort of your main workstation, which is especially handy if the Pi is physically inaccessible.</li>
+    <li><a href="https://randomnerdtutorials.com/raspberry-pi-remote-ssh-vs-code/">Development</a>: Tools like VS Code can connect to the Pi via SSH, enabling you to write and execute code remotely.</li>
+    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Security</a>: SSH provides encrypted communication, ensuring that your commands and data are secure during transmission.</li>
+</ul>
+
+<h4>Using Locally:</h4>
+<ul>
+    <li>Full Desktop Experience: When a display is connected, you can use the Raspberry Pi’s graphical user interface (GUI) for a complete desktop experience.</li>
+    <li>Peripheral Interaction: Directly interact with connected devices such as keyboards, mice, or other USB peripherals.</li>
+    <li>Educational Use: For learning and teaching, having a monitor connected can be more engaging and easier for beginners.</li>
+    <li>No Network Required: Local use doesn’t depend on network connectivity, which can be beneficial in environments with poor or no network access.</li>
+</ul>
+
+<p>If you are going to utilize SSH, please be sure to check that option in the settings page when you are installing, though this can be enabled in the future.</p>
+
+<h2>III - The Power of the Linux Terminal</h2>
+
+<h3>Why use a terminal?</h3>
+<p>A command is just an application. Some commands open a window (a Graphical User Interface or GUI) while others remain in the terminal (referred to as Command-Line Interface or CLI). Many developers create applications that live in the terminal because, frankly, it’s a lot less work. What this means is that small, specialized tools are widely available on Linux since someone likely has already made it.</p>
+
+<p>While there are many, many more commands, this guide will stick to the essentials to get you up and running quickly. The essentials have been divided into the following categories:</p>
+<ul>
+    <li>File Operations</li>
+    <li>Permissions</li>
+    <li>Installing Applications</li>
+    <li>Coding</li>
+    <li>Git Essentials</li>
+    <li>Miscellaneous</li>
+</ul>
+
+<p>These commands can be accessed in the terminal and can have many different options (called parameters outside of a program, arguments inside a program). Google is your friend here, but an even better friend is <code>tldr</code>. It provides simple and concise explanations of commands with examples for the most common uses of those commands.</p>
+
+<p>Learning these commands will take time. It will at times be frustrating. Like anything worthwhile, it takes time, practice, and patience.</p>
+
+<h3>Essential Terminal Commands</h3>
+<p>Most commands have different parameters, some optional and some required. This guide will only cover the most common uses of the most common commands. Use <code>tldr</code> command to get more uses for a command. Use <code>man</code> command to get detailed information and all parameters for a command.</p>
+
+<p>For most commands, either a full path or relative path may be used for input/output files and directories. Make sure to consider your user access to paths as well. For a command with input and/or output parameters, the input must be a file/directory that your user has access to read. The output must be a file/directory that your user has access to write to.</p>
+
+<p>Most commands also support wildcard characters. Once you’re familiar with commands, start experimenting with wildcards. Start by reading more <a href="https://www.fosslinux.com/44230/wildcards-in-linux-examples.htm">here</a>.</p>
+
+<h4>File Operations</h4>
+
+<h5>cd</h5>
+<p><code>cd</code> is by far the most commonly used command line utility. This changes what directory you are currently in.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>cd</code></td>
+        <td>Go to your home directory, /home/username.</td>
+    </tr>
+    <tr>
+        <td><code>cd ~</code></td>
+        <td>Go to your home directory, /home/username.</td>
+    </tr>
+    <tr>
+        <td><code>cd /home/username/directory</code></td>
+        <td>Go to a specific directory by providing a full path.</td>
+    </tr>
+    <tr>
+        <td><code>cd directory</code></td>
+        <td>Go to a directory that is in your current directory.</td>
+    </tr>
+</table>
+
+<h5>ls</h5>
+<p><code>ls</code> is the second most used command. This command will list files and directories in your current location by default, but there are multiple options.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>ls</code></td>
+        <td>Lists files and directories in your current directory.</td>
+    </tr>
+    <tr>
+        <td><code>ls -l</code></td>
+        <td>Include more information like ownership and permissions.</td>
+    </tr>
+    <tr>
+        <td><code>ls -la</code></td>
+        <td>Include hidden files and directories.</td>
+    </tr>
+    <tr>
+        <td><code>ls -la directory</code></td>
+        <td>List all files and information for a specific directory.</td>
+    </tr>
+</table>
+
+<h5>mkdir</h5>
+<p><code>mkdir</code> is used to create a new directory or folder, or many directories at once.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>mkdir a-directory</code></td>
+        <td>Create a new directory.</td>
+    </tr>
+    <tr>
+        <td><code>mkdir a-directory b-directory ...</code></td>
+        <td>Make multiple directories.</td>
+    </tr>
+</table>
+
+<h5>touch</h5>
+<p><code>touch</code> has multiple uses. The primary use is to create new file(s). The secondary use is to update the last-accessed timestamp of a file. Note that this command does not create directories, but will update the timestamp of a directory.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>touch file.txt</code></td>
+        <td>Create (or update the access timestamp) a file.</td>
+    </tr>
+    <tr>
+        <td><code>touch file.txt a-directory ...</code></td>
+        <td>Create/update a file and update a directory.</td>
+    </tr>
+</table>
+
+<h5>cp</h5>
+<p><code>cp</code> copies a file(s)/directory(ies) to a destination directory. This copies the permissions as well as the file contents themselves. cp writes over any existing output file as well.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>cp input-file output-file</code></td>
+        <td>Copy the input file and create/write the output file.</td>
+    </tr>
+    <tr>
+        <td><code>cp a-input b-input directory</code></td>
+        <td>Copy multiple files into one output directory.</td>
+    </tr>
+    <tr>
+        <td><code>cp -r input-directory output-directory</code></td>
+        <td>Create a copy of the input directory with the output’s name.</td>
+    </tr>
+</table>
+
+<h5>mv</h5>
+<p><code>mv</code> moves a file(s)/directory(ies) to a target destination. This can be used to rename a file or directory, or move file(s)/directory(ies) into another location.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>mv input-file directory</code></td>
+        <td>Move the input file into the directory.</td>
+    </tr>
+    <tr>
+        <td><code>mv a-input b-input directory</code></td>
+        <td>Move multiple files into one directory.</td>
+    </tr>
+    <tr>
+        <td><code>mv input-name output-name</code></td>
+        <td>Rename a directory/file.</td>
+    </tr>
+</table>
+
+<h5>rm</h5>
+<p><code>rm</code> is the delete command, and can remove one or more files at once, and can be used to delete directories as well.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>rm input-file</code></td>
+        <td>Remove a file.</td>
+    </tr>
+    <tr>
+        <td><code>rm a-input b-input</code></td>
+        <td>Remove multiple files at once.</td>
+    </tr>
+    <tr>
+        <td><code>rm -r a-directory</code></td>
+        <td>Remove a directory.</td>
+    </tr>
+</table>
+
+</body>
 </html>
