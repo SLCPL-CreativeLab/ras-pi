@@ -110,7 +110,7 @@
 <h3>Installation</h3>
 <p>Install the Raspberry Pi Imager on a computer. This is used to install a .iso file to an SD card or MicroSD card (depending on your Raspberry Pi model). Launch the application and you’ll see the following buttons:</p>
 <div class="image-container">
-    <img src="image1.jpg" alt="Raspberry Pi Imager Interface">
+    <img src="/man/pages/img/image1.png" alt="Raspberry Pi Imager Interface">
 </div>
 <p>Select your Raspberry Pi device and the storage device connected to your computer.</p>
 
@@ -118,17 +118,17 @@
 
 <p>Once you hit next, you should see the popup below:</p>
 <div class="image-container">
-    <img src="image2.jpg" alt="Raspberry Pi Imager Popup">
+    <img src="/man/pages/img/image2.png" alt="Raspberry Pi Imager Popup">
 </div>
 
 <p>Click <strong>EDIT SETTINGS</strong> and <strong>Set username and password</strong>. This is the only setting you <em>should</em> set, but others are available, such as enabling SSH (Secure Shell protocol). For the time being, let’s skip those since they’re not strictly necessary.</p>
 <div class="image-container">
-    <img src="image3.jpg" alt="Raspberry Pi Settings Edit">
+    <img src="/man/pages/img/image3.png" alt="Raspberry Pi Settings Edit">
 </div>
 
 <p>Now, wait until the installation is complete!</p>
 <div class="image-container">
-    <img src="image4.jpg" alt="Raspberry Pi Installation Progress">
+    <img src="/man/pages/img/image4.png" alt="Raspberry Pi Installation Progress">
 </div>
 
 <h3>SSH vs. Local</h3>
@@ -334,6 +334,359 @@
         <td>Remove a directory.</td>
     </tr>
 </table>
+
+<h2>Permissions</h2>
+
+<h3>sudo</h3>
+<p><strong>sudo</strong> allows a command to be run as the root user (see II - How to use Linux). This is most commonly used in conjunction with your package manager (see Installing Applications), but there are many use cases where you’ll want to use it. From editing system configuration files to executing system commands, in Windows terms <code>sudo</code> elevates your command to be run as the Administrator.</p>
+<p>Related: <code>su</code></p>
+<p>Association: <strong>s</strong>witch <strong>u</strong>ser and <strong>do</strong> || <strong>s</strong>uper <strong>u</strong>ser and <strong>do</strong></p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>sudo nvim /usr/local/bin/a-custom-script</code></td>
+        <td>Since a regular user doesn’t have permission to edit a file in <code>/usr/local/bin</code>, switch to the root user to edit the file.</td>
+    </tr>
+    <tr>
+        <td><code>sudo apt install firefox</code></td>
+        <td>Installing, updating, upgrading, and removing packages requires <code>sudo</code> (see Apps).</td>
+    </tr>
+    <tr>
+        <td><code>sudo cp new-script /usr/local/bin</code></td>
+        <td>Copy a new script to a globally accessible script location (see IV - Making your own CLI tools).</td>
+    </tr>
+</table>
+
+<h2>Apps</h2>
+
+<h3>Package Manager == App Store</h3>
+<p>A package manager is an app store (in coding, the ‘==’ operation is a boolean expression meaning the left and right are the same value). There are a few important differences though.</p>
+<ul>
+    <li>A package manager is “distro-dependent”, meaning it is only available to and is designed for specific Linux distributions and families. A package manager can also be available and designed for use for a specific programming language as well (see Setting Up Programming Languages).</li>
+    <li>A package manager is usually a <strong>C</strong>ommand <strong>L</strong>ine <strong>I</strong>nterface, meaning that your interaction with it is limited to the terminal.</li>
+    <li>If an application is already installed and you attempt to re-install it, the exact behavior can vary but either the package manager aborts the operation or it re-installs the app.</li>
+</ul>
+
+<h4>Raspberry Pi</h4>
+<p>For the Raspberry Pi, the package manager is <strong>A</strong>dvanced <strong>P</strong>ackage <strong>T</strong>ool, commonly called <code>apt</code>. Packages are applications, with all dependencies and instructions already set up.</p>
+<p>The <code>install</code> and <code>upgrade</code> sub-commands will typically require some input from you. This comes in the form of simple <code>Y</code> or <code>N</code> prompts typically.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>sudo apt update</code></td>
+        <td>Check if any packages have a new version available.</td>
+    </tr>
+    <tr>
+        <td><code>sudo apt install firefox</code></td>
+        <td>Install the Firefox web browser.</td>
+    </tr>
+    <tr>
+        <td><code>sudo apt remove firefox</code></td>
+        <td>Uninstall the Firefox web browser.</td>
+    </tr>
+    <tr>
+        <td><code>sudo apt upgrade</code></td>
+        <td>Upgrade every package installed with <code>apt</code> to the latest version.</td>
+    </tr>
+    <tr>
+        <td><code>apt search firefox</code></td>
+        <td>Find a package based upon search criteria.</td>
+    </tr>
+</table>
+
+<h2>Coding</h2>
+
+<p>Linux is a programmer’s playground. Writing code that will modify your system, create applications, and CLI tools, are all easily accessible through Linux. This section will cover how you can write code in the terminal, and how you can run that code.</p>
+
+<h3>Text Editor</h3>
+
+<h4>NeoVim</h4>
+<p>High-level, Neovim is a customizable and extensible text editor. You can either install a pre-configured Neovim distro (like <a href="https://www.lunarvim.org/">LunarVim</a>, <a href="https://astronvim.com/">AstroNvim</a>, or <a href="https://www.lazyvim.org/">LazyVim</a>) or start from scratch. While you’re learning, a pre-configured distro is going to smooth the learning curve and is the general recommendation for starting out with Neovim. It’ll include modern conveniences like auto-complete, GitHub Copilot, warnings and errors, and more.</p>
+<p>Eventually, creating a custom configuration is ideal but ultimately not necessary. The keybindings below are the same across distributions. Additionally, most servers will have at least Vi (an ancestor of Neovim) installed. Part of the power of Neovim (and its ancestors Vi and Vim) is the modal interface. Fancy words aside, this just means that you only operate within different modes. In different modes, the keybindings change. This will only cover the most common and necessary keybinds and commands.</p>
+
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+    <tr>
+        <td><code>nvim</code></td>
+        <td>Open a new file. The file is created with its contents once you save.</td>
+        <td>Basic file creation</td>
+    </tr>
+    <tr>
+        <td><code>nvim file.txt</code></td>
+        <td>Open a file called <code>file.txt</code>.</td>
+        <td>Open a file</td>
+    </tr>
+    <tr>
+        <td><code>nvim .</code></td>
+        <td>Open the current directory in Neovim, using netrw.</td>
+        <td>Enter <code>netrw</code></td>
+    </tr>
+    <tr>
+        <td><code>nvim a-directory</code></td>
+        <td>Open a directory from a path, using netrw.</td>
+        <td>Enter <code>netrw</code></td>
+    </tr>
+</table>
+
+<h5>Keybinds:</h5>
+<p>Part of the power of Neovim is repeatable commands. The commands below can have a number prefix to indicate how many times to perform that command. Eg. <code>50j</code> in command mode translates to moving 50 lines down.</p>
+
+<table>
+    <tr>
+        <th>Keybind</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+    <tr>
+        <td><code>h</code></td>
+        <td>Move the cursor left a column, but in the same row.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>j</code></td>
+        <td>Move the cursor down a row, and attempt to preserve the column.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>k</code></td>
+        <td>Move the cursor right a column, but in the same row.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>l</code></td>
+        <td>Move the cursor up a row, and attempt to preserve the column.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>w</code></td>
+        <td>Move the cursor to the start of the next word or special character, ignoring whitespace.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>b</code></td>
+        <td>Move the cursor to the start of the previous word or special character, ignoring whitespace.</td>
+        <td>Navigation</td>
+    </tr>
+    <tr>
+        <td><code>i</code></td>
+        <td>Enter <code>insert mode</code>, the primary typing mode.</td>
+        <td>Insert Mode</td>
+    </tr>
+    <tr>
+        <td><code>I</code></td>
+        <td>Enter <code>insert mode</code> at the start of the current line.</td>
+        <td>Insert Mode</td>
+    </tr>
+    <tr>
+        <td><code>S</code></td>
+        <td>Enter <code>insert mode</code> after clearing the current line.</td>
+        <td>Insert Mode</td>
+    </tr>
+    <tr>
+        <td><code>A</code></td>
+        <td>Enter <code>insert mode</code> at the end of the line.</td>
+        <td>Insert Mode</td>
+    </tr>
+    <tr>
+        <td><code>v</code></td>
+        <td>Enter <code>visual mode</code> (highlighting/selecting) at the cursor’s current location. Select text with navigation keys.</td>
+        <td>Visual Mode</td>
+    </tr>
+    <tr>
+        <td><code>V</code></td>
+        <td>Enter <code>visual mode</code> at the cursor’s current row. <code>j</code> and <code>k</code> are used to select more rows.</td>
+        <td>Visual Mode</td>
+    </tr>
+    <tr>
+        <td><code>y</code></td>
+        <td>Copy highlighted text to Neovim’s clipboard. <strong>NOTE:</strong> Neovim’s clipboard is separate from your system clipboard.</td>
+        <td>Visual Mode</td>
+    </tr>
+    <tr>
+        <td><code>"*y</code></td>
+        <td>Copy highlighted text to your system clipboard.</td>
+        <td>Visual Mode</td>
+    </tr>
+    <tr>
+        <td><code>u</code></td>
+        <td>Undo.</td>
+        <td>Special Function</td>
+    </tr>
+    <tr>
+        <td><code>p</code></td>
+        <td>Paste text from Neovim’s clipboard.</td>
+        <td>Special Function</td>
+    </tr>
+    <tr>
+        <td><code>:Ex</code></td>
+        <td>Enter Neovim’s file explorer, <code>netrw</code>.</td>
+        <td>Enter <code>netrw</code></td>
+    </tr>
+    <tr>
+        <td><code>%</code></td>
+        <td>Create a file inside the current directory.</td>
+        <td><code>netrw</code> keybinds</td>
+    </tr>
+    <tr>
+        <td><code>d</code></td>
+        <td>Create a new directory inside the current directory.</td>
+        <td><code>netrw</code> keybinds</td>
+    </tr>
+    <tr>
+        <td><code>D</code></td>
+        <td>Delete a file or empty directory.</td>
+        <td><code>netrw</code> keybinds</td>
+    </tr>
+    <tr>
+        <td><code>:w {filename}</code></td>
+        <td>Write (save) the current file. You can specify a filename as well.</td>
+        <td>File Management</td>
+    </tr>
+    <tr>
+        <td><code>:q</code></td>
+        <td>Quit (exit without saving) the current file.</td>
+        <td>File Management</td>
+    </tr>
+    <tr>
+        <td><code>:wq</code></td>
+        <td>Write (save) and quit (exit) the current file.</td>
+        <td>File Management</td>
+    </tr>
+    <tr>
+        <td><code>:%s/original/new/g</code></td>
+        <td>The most common command I use, a highly and easily configurable search and replace. The (optional) <code>%</code> means the entire file. By default, it’ll only apply to the current line. <code>original</code> is the current text and <code>new</code> is the replacement. The (optional) <code>g</code> means every instance on each line. By default, it’ll only apply to the first occurrence.</td>
+        <td>Advanced Command</td>
+    </tr>
+    <tr>
+        <td><code>Escape</code></td>
+        <td>Exit current mode.</td>
+        <td>Exit mode</td>
+    </tr>
+</table>
+
+<h4>Nano - TODO</h4>
+
+<h3>Setting Up Programming Languages</h3>
+<p>A broad overview on a handful of languages that you can use with the Raspberry Pi:</p>
+<p>Python is the most commonly used language with the Raspberry Pi. Python is known for its syntactic simplicity for novice programmers...</p>
+
+<h4>Python</h4>
+<ol>
+    <li>Run <code>sudo apt install python</code>.</li>
+    <li>Verify the installation was successful with <code>python --version</code>.</li>
+    <li>Verify that the python package manager was installed with <code>pip --version</code>.</li>
+</ol>
+
+<h2>Git Essentials</h2>
+<p>Git is a critical component of modern software development...</p>
+
+<h3>git clone</h3>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>git clone https://github.com/&lt;user&gt;/&lt;repo&gt;</code></td>
+        <td>Create a local copy of the remote repo owned by <code>&lt;user&gt;</code> called <code>&lt;repo&gt;</code>.</td>
+    </tr>
+    <tr>
+        <td><code>git clone &lt;remote&gt; &lt;destination&gt;</code></td>
+        <td>Clone a remote repository and save it in a directory called <code>&lt;destination&gt;</code>.</td>
+    </tr>
+</table>
+
+<h3>git stage</h3>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>git stage -A</code></td>
+        <td>Include all changes in the commit.</td>
+    </tr>
+    <tr>
+        <td><code>git stage &lt;file&gt;</code></td>
+        <td>Add a file you want to include in the commit.</td>
+    </tr>
+</table>
+
+<h3>git commit</h3>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>git commit</code></td>
+        <td>Open your default text editor to create the commit message. Once you save and quit, a new snapshot of your local repo is saved.</td>
+    </tr>
+    <tr>
+        <td><code>git commit -m “A commit message.”</code></td>
+        <td>Create the snapshot with a commit message.</td>
+    </tr>
+    <tr>
+        <td><code>git commit --all</code></td>
+        <td>This option auto-stages your changes for the commit, so you do not need <code>git stage</code>.</td>
+    </tr>
+</table>
+
+<h3>git push</h3>
+<p><strong>git push</strong> will attempt to upload your commit(s) to the remote repository.</p>
+
+<h3>git pull</h3>
+<p><strong>git pull</strong> will download the latest changes from the remote repository.</p>
+
+<h2>Quality of Life Improvements</h2>
+
+<h3>man</h3>
+<p><strong>man</strong> is used to open instructional information about a particular command, application, or function. The <code>man</code> command is quite powerful, though a touch verbose. It’ll provide information on all possible parameters, uses, and idiosyncrasies.</p>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>man &lt;command&gt;</code></td>
+        <td>Open the manual for a command, application, or function. Press <code>q</code> to quit, and use <code>j</code> and <code>k</code> to move down and up respectively.</td>
+    </tr>
+</table>
+
+<h3>tldr</h3>
+<p><strong>tldr</strong> is the concise version of <code>man</code>. Personally, I use <code>tldr</code> almost every day. It provides the most common few uses of a command, application, or function.</p>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>tldr &lt;command&gt;</code></td>
+        <td>Get quick information about a command, application, or function.</td>
+    </tr>
+</table>
+
+<h3>zsh</h3>
+<p><strong>zsh</strong> is a shell, effectively the programming language your terminal uses. <code>zsh</code> has more customization options available, such as <code>oh-my-zsh</code>, <code>starship</code>, and much more. Using your programming skills to customize your operating system is a deep rabbit-hole that you should at least be aware of.</p>
+
+<h1>IV - How to unleash the Raspberry Pi’s Potential.</h1>
+
+<h2>Making your own CLI tools</h2>
+<h3>Scripts & automation</h3>
+<h3>Code writing and text creation</h3>
+<h3>Important rules (syntax)</h3>
 
 </body>
 </html>
