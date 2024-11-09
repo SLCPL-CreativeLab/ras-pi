@@ -4,63 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raspberry Pi & Linux Guide</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
-        h1, h2, h3 {
-            color: #333;
-        }
-        h1 {
-            font-size: 2em;
-        }
-        h2 {
-            font-size: 1.75em;
-        }
-        h3 {
-            font-size: 1.5em;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            margin-bottom: 10px;
-        }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ddd;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .image-container {
-            text-align: center;
-        }
-        .image-container img {
-            width: 80%;
-            max-width: 600px;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -110,7 +54,7 @@
 <h3>Installation</h3>
 <p>Install the Raspberry Pi Imager on a computer. This is used to install a .iso file to an SD card or MicroSD card (depending on your Raspberry Pi model). Launch the application and you’ll see the following buttons:</p>
 <div class="image-container">
-    <img src="/man/pages/img/image1.png" alt="Raspberry Pi Imager Interface">
+    <img src="img/image1.png" alt="Raspberry Pi Imager Interface">
 </div>
 <p>Select your Raspberry Pi device and the storage device connected to your computer.</p>
 
@@ -118,17 +62,17 @@
 
 <p>Once you hit next, you should see the popup below:</p>
 <div class="image-container">
-    <img src="/man/pages/img/image2.png" alt="Raspberry Pi Imager Popup">
+    <img src="img/image2.png" alt="Raspberry Pi Imager Popup">
 </div>
 
 <p>Click <strong>EDIT SETTINGS</strong> and <strong>Set username and password</strong>. This is the only setting you <em>should</em> set, but others are available, such as enabling SSH (Secure Shell protocol). For the time being, let’s skip those since they’re not strictly necessary.</p>
 <div class="image-container">
-    <img src="/man/pages/img/image3.png" alt="Raspberry Pi Settings Edit">
+    <img src="img/image3.png" alt="Raspberry Pi Settings Edit">
 </div>
 
 <p>Now, wait until the installation is complete!</p>
 <div class="image-container">
-    <img src="/man/pages/img/image4.png" alt="Raspberry Pi Installation Progress">
+    <img src="img/image4.png" alt="Raspberry Pi Installation Progress">
 </div>
 
 <h3>SSH vs. Local</h3>
