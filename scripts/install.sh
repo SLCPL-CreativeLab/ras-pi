@@ -139,7 +139,14 @@ init_ollama() {
 	python -m venv open-webui-env;
 	source open-webui-env/bin/activate
 	pip install open-webui;
-	open-webui serve --port $OLLAMA_PORT;
+	echo "
+		export OLLAMA_BASE_URL=http://localhost:11434;
+		export WEBUI_BASE_URL=ai.$DOMAIN;
+		export WEBUI_AUTH=False;
+	" >> $(pwd)/.bashrc;
+	open-webui serve --port $OLLAMA_PORT &;
+
+	curl -fsSL https://ollama.com/install.sh | sh;
 }
 
 # This function initializes cloudflared.
@@ -148,7 +155,7 @@ init_cloudflared() {
 	cloudflared tunnel login;
 	cloudflared tunnel create raspi;
 	TUNNEL_ID=$(cloudflared tunnel list | awk '/raspi/ {print $1}');
-	read "?What is your domain name? e.g., vintagecoding.net" DOMAIN;
+	read "?What is your domain name? e.g., vintagecoding.net" $DOMAIN;
 
 	cd;
 	echo "
