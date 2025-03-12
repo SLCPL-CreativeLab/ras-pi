@@ -3,6 +3,8 @@
 # For explanations of commands, visit raspi.vintagecoding.net or use Google.
 
 # GLOBAL VARIABLES
+
+DOMAIN=""
 MANUAL_PORT=5090
 JELLYFIN_PORT=5091
 OLLAMA_PORT=5092
@@ -69,7 +71,8 @@ init() {
 	# Install podman, a container technology for easily deploying projects.
 	# Install golang, a server-side programming language.
 	# Install tools for the user
-	sudo apt update && sudo apt install cloudflared podman golang tldr neovim;
+	sudo apt update && sudo apt install nginx cloudflared podman golang tldr neovim;
+
 }
 
 # This function initializes the manual mirror of raspi.vintagecoding.net
@@ -123,25 +126,48 @@ init_jellyfin() {
 		--restart always \
 	jellyfin
 
-	echo "Finished creating the Jellyfin container! It is now live on"
-	echo "http://localhost:$JELLYFIN_PORT. If you enabled it, it'll also be"
-	echo "available at media.yourdomain.com."
+	echo "Finished creating the Jellyfin container! It is now live on";
+	echo "http://localhost:$JELLYFIN_PORT. If you enabled it, it'll also be";
+	echo "available at media.yourdomain.com.";
 }
 
 # This function initializes Ollama.
 init_ollama() {
-	echo "This will take a while..."
+	echo "This will take a while...";
+
+	cd;
+	python -m venv open-webui-env;
+	source open-webui-env/bin/activate
+	pip install open-webui;
+	open-webui serve --port $OLLAMA_PORT;
 }
 
 # This function initializes cloudflared.
+# TODO: This needs to dynamically insert based upon what the user has entered.
 init_cloudflared() {
-	echo "There will be some manual intervention you'll need to make to \
-		to setup cloudflared. Please see "
-	cloudflared tunnel login
-	cloudflared tunnel create raspi
-	read "?What is your domain name? e.g., vintagecoding.net" DOMAIN
+	cloudflared tunnel login;
+	cloudflared tunnel create raspi;
+	TUNNEL_ID=$(cloudflared tunnel list | awk '/raspi/ {print $1}');
+	read "?What is your domain name? e.g., vintagecoding.net" DOMAIN;
 
-	# TODO: Implement tunnel creation
+	cd;
+	echo "
+	tunnel: $TUNNEL_ID
+	credentials-file: $(pwd)/.cloudflared/$TUNNEL_ID.json
+	ingress:
+		- hostname: raspi.$DOMAIN
+			service: http://localhost:$MANUAL_PORT
+		- hostname: media.$DOMAIN
+			service: http://localhost:$JELLYFIN_PORT
+		- hostname: ai.$DOMAIN
+			service: http://localhost:$OLLAMA_PORT
+		- service: http_status:404
+
+		" > $(pwd)/.cloudflared/config.yaml;
+
+	cloudflared tunnel route dns $TUNNEL_ID raspi.$DOMAIN;
+	cloudflared tunnel route dns $TUNNEL_ID media.$DOMAIN;
+	cloudflared tunnel route dns $TUNNEL_ID ai.$DOMAIN;
 
 	echo "
 		[Unit]
@@ -160,35 +186,71 @@ init_cloudflared() {
 
 	sudo systemctl enable cloudflared.service;
 	sudo systemctl start cloudflared.service;
+
+	sudo echo "
+	server {
+    listen 80; #or whatever port your open-webui backend is running on.
+    server_name ai.$DOMAIN;
+
+    location /api/ {
+        proxy_pass http://localhost:$OLLAMA_PORT/api/; # Ensure the trailing slash is present
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+    location / {
+        proxy_pass http://localhost:$OLLAMA_PORT/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+}
+	" > /etc/nginx/sites-available/open-webui;
+	sudo ln -s /etc/nginx/sites-available/open-webui /etc/nginx/sites-enabled
+	sudo systemctl enable nginx;
+	sudo systemctl start nginx;
 }
 
 # Display help if the user requests it.
 if [[ $# == 1 && ($1 == "--help" || $1 == "-h") ]]; then
-	help
-	exit
+	help;
+	exit;
 fi
 
 # Get user input for some default applications to get started.
-read "?Do you have a Cloudflare account and own a domain? (y/N)" CLOUDFLARE
+read "?Do you have a Cloudflare account and own a domain? (y/N)" CLOUDFLARE;
 read "?Do you want a mirror of the manual from raspi.vintagecoding.net\
-	on this device? (y/N)" MANUAL
-read "?Do you want to setup Jellyfin, a personal Netflix alternative? (y/N)" JELLYFIN
-read "?Do you want to setup Ollama, a personal ChatGPT alternative? (y/N)" OLLAMA
+	on this device? (y/N)" MANUAL;
+read "?Do you want to setup Jellyfin, a personal Netflix alternative? (y/N)" JELLYFIN;
+read "?Do you want to setup Ollama, a personal ChatGPT alternative? (y/N)" OLLAMA;
 
-init
+init;
 
 if [[ $MANUAL == "y" ]]; then
-	init_manual
+	init_manual;
 fi
 
 if [[ $JELLYFIN == "y" ]]; then
-	init_jellyfin
+	init_jellyfin;
 fi
 
 if [[ $CLOUDFLARE == "y" ]]; then
-	init_cloudflare
+	init_cloudflare;
+else
+	echo "You can still use Cloudflare for free, by generating random URLs."
+	echo "Enter the following into a terminal:";
+	echo "    cloudflared tunnel --url=http://localhost:PORT";
+	echo "to get a URL a process, for example. Replace PORT with one of the following:";
+	echo "    $MANUAL_PORT (The manual mirror's port.)";
+	echo "    $JELLYFIN_PORT (The Jellyfin port.)";
+	echo "    $OLLAMA_PORT (The Ollama & Open Web-UI port.)";
 fi
 
 if [[ $OLLAMA == "y" ]]; then
-	init_ollama
+	init_ollama;
 fi
