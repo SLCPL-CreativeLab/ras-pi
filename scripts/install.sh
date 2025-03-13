@@ -107,7 +107,7 @@ init_jellyfin() {
 		--user $(id -u):$(id -g) \
 		--volume jellyfin-cache:/cache:Z \
 		--volume jellyfin-config:/config:Z \
-		--mount type=bind,source=/$(pwd)/media,destination=/media,ro=true,relabel=private \
+		--mount type=bind,source=/$HOME/media,destination=/media,ro=true,relabel=private \
 		--restart always \
 	ghcr.io/jellyfin/jellyfin;
 

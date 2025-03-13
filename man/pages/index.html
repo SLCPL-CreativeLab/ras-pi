@@ -1,636 +1,918 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raspberry Pi & Linux Guide</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js"></script>
 </head>
+
 <body>
 
-<h1>Raspberry Pi & Linux Guide</h1>
-
-<h2>I - What is a Raspberry Pi and Linux?</h2>
-
-<h3>Raspberry Pi</h3>
-
-<h4>What is it?</h4>
-<p><a href="https://en.wikipedia.org/wiki/Raspberry_Pi">The Raspberry Pi</a> is a series of small, affordable, single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in collaboration with Broadcom. It’s designed to promote teaching basic computer science and to provide an accessible platform for hobbyists, educators, and students to explore computing, learn programming, and work on various digital projects.</p>
-
-<h4>Raspberry Pi Projects</h4>
-<p><a href="https://projects.raspberrypi.org/">Raspberry Pi projects</a> range from simple learning tools to complex systems. Some popular project ideas include:</p>
-<ul>
-    <li><a href="https://projects.raspberrypi.org/">Coding and Computing</a>: Using Raspberry Pi to learn programming languages like Python and Scratch.</li>
-    <li>Home Automation: Creating smart home devices that can control lighting, temperature, or security systems.</li>
-    <li>Retro Gaming: Building a retro gaming console to play classic games.</li>
-    <li><a href="https://www.tomshardware.com/features/best-raspberry-pi-projects">Robotics</a>: Designing robots that can perform various tasks or respond to the environment.</li>
-    <li>Media Centers: Setting up a media server to stream videos and music throughout your home.</li>
-</ul>
-
-<h4>Raspberry Pi Documentation</h4>
-<p>To read more about the Raspberry Pi, you can visit the official Raspberry Pi website or explore its Wikipedia page for detailed information on its history, models, and specifications. Additionally, there are numerous online communities and forums where Raspberry Pi enthusiasts share their projects and offer support.</p>
-
-<h3>Linux</h3>
-
-<h4>What is Linux?</h4>
-<ul>
-    <li>Linux is an open-source operating system (OS) that has been around since the mid-1990s. It’s part of the Unix-like family of OSes.</li>
-    <li>Unlike proprietary systems like Windows or macOS, Linux is freely redistributable, which means anyone can create their own distribution (distro) for any purpose.</li>
-    <li>The core of Linux is the Linux kernel, which manages the CPU, memory, and peripheral devices. However, when people refer to “Linux,” they often mean the entire OS, including additional software and tools.</li>
-    <li>Linux is everywhere: from smartphones and cars to supercomputers and home appliances. It powers most of the Internet, top supercomputers, and stock exchanges.</li>
-    <li>Android, one of the most popular platforms globally, is also based on the Linux kernel.</li>
-</ul>
-
-<h4>Why does the Pi use Linux?</h4>
-<ul>
-    <li>The Raspberry Pi Foundation has a unique mission: to help young people learn how to use computers and improve their tech skills.</li>
-    <li>They created the Raspberry Pi, an affordable computer (costing less than $50) that can be used in schools. It helps students become more confident with computers and learn programming.</li>
-    <li>However, the Raspberry Pi is different from traditional computers, so a specialized OS was needed. That’s where Raspberry Pi OS (formerly Raspbian) comes in.</li>
-    <li>Raspberry Pi OS is a lightweight Linux distribution designed specifically for Raspberry Pi. It achieves the foundation’s goals by providing a compatible and user-friendly environment for learning and development.</li>
-</ul>
-
-<h2>II - How to use Linux</h2>
-
-<h3>Installation</h3>
-<p>Install the Raspberry Pi Imager on a computer. This is used to install a .iso file to an SD card or MicroSD card (depending on your Raspberry Pi model). Launch the application and you’ll see the following buttons:</p>
-<div class="image-container">
-    <img src="img/image1.png" alt="Raspberry Pi Imager Interface">
-</div>
-<p>Select your Raspberry Pi device and the storage device connected to your computer.</p>
-
-<p>For the Operating System, if you have a Raspberry Pi 3 or newer, the top option should be OK. Anything older, and you should choose Raspberry Pi OS (Legacy, 32-bit) Lite. Note that this will not install a Desktop Environment (DE), which means everything you’ll do is through the terminal. That might sound scary, but don’t worry. This guide will go over everything you need to know to hit the ground running.</p>
-
-<p>Once you hit next, you should see the popup below:</p>
-<div class="image-container">
-    <img src="img/image2.png" alt="Raspberry Pi Imager Popup">
-</div>
-
-<p>Click <strong>EDIT SETTINGS</strong> and <strong>Set username and password</strong>. This is the only setting you <em>should</em> set, but others are available, such as enabling SSH (Secure Shell protocol). For the time being, let’s skip those since they’re not strictly necessary.</p>
-<div class="image-container">
-    <img src="img/image3.png" alt="Raspberry Pi Settings Edit">
-</div>
-
-<p>Now, wait until the installation is complete!</p>
-<div class="image-container">
-    <img src="img/image4.png" alt="Raspberry Pi Installation Progress">
-</div>
-
-<h3>SSH vs. Local</h3>
-<p>Using a Raspberry Pi with Linux can be experienced in two distinct ways: through SSH (Secure Shell) or locally by connecting a display directly to the Pi. Here’s a comparison of both methods:</p>
-
-<h4>Using SSH:</h4>
-<ul>
-    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Remote Access</a>: SSH allows you to control your Raspberry Pi from another computer on the same network or even over the internet.</li>
-    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Headless Operation</a>: Ideal for running the Raspberry Pi without a monitor, keyboard, or mouse—useful for servers or embedded projects.</li>
-    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Convenience</a>: Manage your Pi from the comfort of your main workstation, which is especially handy if the Pi is physically inaccessible.</li>
-    <li><a href="https://randomnerdtutorials.com/raspberry-pi-remote-ssh-vs-code/">Development</a>: Tools like VS Code can connect to the Pi via SSH, enabling you to write and execute code remotely.</li>
-    <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Security</a>: SSH provides encrypted communication, ensuring that your commands and data are secure during transmission.</li>
-</ul>
-
-<h4>Using Locally:</h4>
-<ul>
-    <li>Full Desktop Experience: When a display is connected, you can use the Raspberry Pi’s graphical user interface (GUI) for a complete desktop experience.</li>
-    <li>Peripheral Interaction: Directly interact with connected devices such as keyboards, mice, or other USB peripherals.</li>
-    <li>Educational Use: For learning and teaching, having a monitor connected can be more engaging and easier for beginners.</li>
-    <li>No Network Required: Local use doesn’t depend on network connectivity, which can be beneficial in environments with poor or no network access.</li>
-</ul>
-
-<p>If you are going to utilize SSH, please be sure to check that option in the settings page when you are installing, though this can be enabled in the future.</p>
-
-<h2>III - The Power of the Linux Terminal</h2>
-
-<h3>Why use a terminal?</h3>
-<p>A command is just an application. Some commands open a window (a Graphical User Interface or GUI) while others remain in the terminal (referred to as Command-Line Interface or CLI). Many developers create applications that live in the terminal because, frankly, it’s a lot less work. What this means is that small, specialized tools are widely available on Linux since someone likely has already made it.</p>
-
-<p>While there are many, many more commands, this guide will stick to the essentials to get you up and running quickly. The essentials have been divided into the following categories:</p>
-<ul>
-    <li>File Operations</li>
-    <li>Permissions</li>
-    <li>Installing Applications</li>
-    <li>Coding</li>
-    <li>Git Essentials</li>
-    <li>Miscellaneous</li>
-</ul>
-
-<p>These commands can be accessed in the terminal and can have many different options (called parameters outside of a program, arguments inside a program). Google is your friend here, but an even better friend is <code>tldr</code>. It provides simple and concise explanations of commands with examples for the most common uses of those commands.</p>
-
-<p>Learning these commands will take time. It will at times be frustrating. Like anything worthwhile, it takes time, practice, and patience.</p>
-
-<h3>Essential Terminal Commands</h3>
-<p>Most commands have different parameters, some optional and some required. This guide will only cover the most common uses of the most common commands. Use <code>tldr</code> command to get more uses for a command. Use <code>man</code> command to get detailed information and all parameters for a command.</p>
-
-<p>For most commands, either a full path or relative path may be used for input/output files and directories. Make sure to consider your user access to paths as well. For a command with input and/or output parameters, the input must be a file/directory that your user has access to read. The output must be a file/directory that your user has access to write to.</p>
-
-<p>Most commands also support wildcard characters. Once you’re familiar with commands, start experimenting with wildcards. Start by reading more <a href="https://www.fosslinux.com/44230/wildcards-in-linux-examples.htm">here</a>.</p>
-
-<h4>File Operations</h4>
-
-<h5>cd</h5>
-<p><code>cd</code> is by far the most commonly used command line utility. This changes what directory you are currently in.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>cd</code></td>
-        <td>Go to your home directory, /home/username.</td>
-    </tr>
-    <tr>
-        <td><code>cd ~</code></td>
-        <td>Go to your home directory, /home/username.</td>
-    </tr>
-    <tr>
-        <td><code>cd /home/username/directory</code></td>
-        <td>Go to a specific directory by providing a full path.</td>
-    </tr>
-    <tr>
-        <td><code>cd directory</code></td>
-        <td>Go to a directory that is in your current directory.</td>
-    </tr>
-</table>
-
-<h5>ls</h5>
-<p><code>ls</code> is the second most used command. This command will list files and directories in your current location by default, but there are multiple options.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>ls</code></td>
-        <td>Lists files and directories in your current directory.</td>
-    </tr>
-    <tr>
-        <td><code>ls -l</code></td>
-        <td>Include more information like ownership and permissions.</td>
-    </tr>
-    <tr>
-        <td><code>ls -la</code></td>
-        <td>Include hidden files and directories.</td>
-    </tr>
-    <tr>
-        <td><code>ls -la directory</code></td>
-        <td>List all files and information for a specific directory.</td>
-    </tr>
-</table>
-
-<h5>mkdir</h5>
-<p><code>mkdir</code> is used to create a new directory or folder, or many directories at once.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>mkdir a-directory</code></td>
-        <td>Create a new directory.</td>
-    </tr>
-    <tr>
-        <td><code>mkdir a-directory b-directory ...</code></td>
-        <td>Make multiple directories.</td>
-    </tr>
-</table>
-
-<h5>touch</h5>
-<p><code>touch</code> has multiple uses. The primary use is to create new file(s). The secondary use is to update the last-accessed timestamp of a file. Note that this command does not create directories, but will update the timestamp of a directory.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>touch file.txt</code></td>
-        <td>Create (or update the access timestamp) a file.</td>
-    </tr>
-    <tr>
-        <td><code>touch file.txt a-directory ...</code></td>
-        <td>Create/update a file and update a directory.</td>
-    </tr>
-</table>
-
-<h5>cp</h5>
-<p><code>cp</code> copies a file(s)/directory(ies) to a destination directory. This copies the permissions as well as the file contents themselves. cp writes over any existing output file as well.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>cp input-file output-file</code></td>
-        <td>Copy the input file and create/write the output file.</td>
-    </tr>
-    <tr>
-        <td><code>cp a-input b-input directory</code></td>
-        <td>Copy multiple files into one output directory.</td>
-    </tr>
-    <tr>
-        <td><code>cp -r input-directory output-directory</code></td>
-        <td>Create a copy of the input directory with the output’s name.</td>
-    </tr>
-</table>
-
-<h5>mv</h5>
-<p><code>mv</code> moves a file(s)/directory(ies) to a target destination. This can be used to rename a file or directory, or move file(s)/directory(ies) into another location.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>mv input-file directory</code></td>
-        <td>Move the input file into the directory.</td>
-    </tr>
-    <tr>
-        <td><code>mv a-input b-input directory</code></td>
-        <td>Move multiple files into one directory.</td>
-    </tr>
-    <tr>
-        <td><code>mv input-name output-name</code></td>
-        <td>Rename a directory/file.</td>
-    </tr>
-</table>
-
-<h5>rm</h5>
-<p><code>rm</code> is the delete command, and can remove one or more files at once, and can be used to delete directories as well.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>rm input-file</code></td>
-        <td>Remove a file.</td>
-    </tr>
-    <tr>
-        <td><code>rm a-input b-input</code></td>
-        <td>Remove multiple files at once.</td>
-    </tr>
-    <tr>
-        <td><code>rm -r a-directory</code></td>
-        <td>Remove a directory.</td>
-    </tr>
-</table>
-
-<h2>Permissions</h2>
-
-<h3>sudo</h3>
-<p><strong>sudo</strong> allows a command to be run as the root user (see II - How to use Linux). This is most commonly used in conjunction with your package manager (see Installing Applications), but there are many use cases where you’ll want to use it. From editing system configuration files to executing system commands, in Windows terms <code>sudo</code> elevates your command to be run as the Administrator.</p>
-<p>Related: <code>su</code></p>
-<p>Association: <strong>s</strong>witch <strong>u</strong>ser and <strong>do</strong> || <strong>s</strong>uper <strong>u</strong>ser and <strong>do</strong></p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>sudo nvim /usr/local/bin/a-custom-script</code></td>
-        <td>Since a regular user doesn’t have permission to edit a file in <code>/usr/local/bin</code>, switch to the root user to edit the file.</td>
-    </tr>
-    <tr>
-        <td><code>sudo apt install firefox</code></td>
-        <td>Installing, updating, upgrading, and removing packages requires <code>sudo</code> (see Apps).</td>
-    </tr>
-    <tr>
-        <td><code>sudo cp new-script /usr/local/bin</code></td>
-        <td>Copy a new script to a globally accessible script location (see IV - Making your own CLI tools).</td>
-    </tr>
-</table>
-
-<h2>Apps</h2>
-
-<h3>Package Manager == App Store</h3>
-<p>A package manager is an app store (in coding, the ‘==’ operation is a boolean expression meaning the left and right are the same value). There are a few important differences though.</p>
-<ul>
-    <li>A package manager is “distro-dependent”, meaning it is only available to and is designed for specific Linux distributions and families. A package manager can also be available and designed for use for a specific programming language as well (see Setting Up Programming Languages).</li>
-    <li>A package manager is usually a <strong>C</strong>ommand <strong>L</strong>ine <strong>I</strong>nterface, meaning that your interaction with it is limited to the terminal.</li>
-    <li>If an application is already installed and you attempt to re-install it, the exact behavior can vary but either the package manager aborts the operation or it re-installs the app.</li>
-</ul>
-
-<h4>Raspberry Pi</h4>
-<p>For the Raspberry Pi, the package manager is <strong>A</strong>dvanced <strong>P</strong>ackage <strong>T</strong>ool, commonly called <code>apt</code>. Packages are applications, with all dependencies and instructions already set up.</p>
-<p>The <code>install</code> and <code>upgrade</code> sub-commands will typically require some input from you. This comes in the form of simple <code>Y</code> or <code>N</code> prompts typically.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>sudo apt update</code></td>
-        <td>Check if any packages have a new version available.</td>
-    </tr>
-    <tr>
-        <td><code>sudo apt install firefox</code></td>
-        <td>Install the Firefox web browser.</td>
-    </tr>
-    <tr>
-        <td><code>sudo apt remove firefox</code></td>
-        <td>Uninstall the Firefox web browser.</td>
-    </tr>
-    <tr>
-        <td><code>sudo apt upgrade</code></td>
-        <td>Upgrade every package installed with <code>apt</code> to the latest version.</td>
-    </tr>
-    <tr>
-        <td><code>apt search firefox</code></td>
-        <td>Find a package based upon search criteria.</td>
-    </tr>
-</table>
-
-<h2>Coding</h2>
-
-<p>Linux is a programmer’s playground. Writing code that will modify your system, create applications, and CLI tools, are all easily accessible through Linux. This section will cover how you can write code in the terminal, and how you can run that code.</p>
-
-<h3>Text Editor</h3>
-
-<h4>NeoVim</h4>
-<p>High-level, Neovim is a customizable and extensible text editor. You can either install a pre-configured Neovim distro (like <a href="https://www.lunarvim.org/">LunarVim</a>, <a href="https://astronvim.com/">AstroNvim</a>, or <a href="https://www.lazyvim.org/">LazyVim</a>) or start from scratch. While you’re learning, a pre-configured distro is going to smooth the learning curve and is the general recommendation for starting out with Neovim. It’ll include modern conveniences like auto-complete, GitHub Copilot, warnings and errors, and more.</p>
-<p>Eventually, creating a custom configuration is ideal but ultimately not necessary. The keybindings below are the same across distributions. Additionally, most servers will have at least Vi (an ancestor of Neovim) installed. Part of the power of Neovim (and its ancestors Vi and Vim) is the modal interface. Fancy words aside, this just means that you only operate within different modes. In different modes, the keybindings change. This will only cover the most common and necessary keybinds and commands.</p>
-
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-        <th>Category</th>
-    </tr>
-    <tr>
-        <td><code>nvim</code></td>
-        <td>Open a new file. The file is created with its contents once you save.</td>
-        <td>Basic file creation</td>
-    </tr>
-    <tr>
-        <td><code>nvim file.txt</code></td>
-        <td>Open a file called <code>file.txt</code>.</td>
-        <td>Open a file</td>
-    </tr>
-    <tr>
-        <td><code>nvim .</code></td>
-        <td>Open the current directory in Neovim, using netrw.</td>
-        <td>Enter <code>netrw</code></td>
-    </tr>
-    <tr>
-        <td><code>nvim a-directory</code></td>
-        <td>Open a directory from a path, using netrw.</td>
-        <td>Enter <code>netrw</code></td>
-    </tr>
-</table>
-
-<h5>Keybinds:</h5>
-<p>Part of the power of Neovim is repeatable commands. The commands below can have a number prefix to indicate how many times to perform that command. Eg. <code>50j</code> in command mode translates to moving 50 lines down.</p>
-
-<table>
-    <tr>
-        <th>Keybind</th>
-        <th>Description</th>
-        <th>Category</th>
-    </tr>
-    <tr>
-        <td><code>h</code></td>
-        <td>Move the cursor left a column, but in the same row.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>j</code></td>
-        <td>Move the cursor down a row, and attempt to preserve the column.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>k</code></td>
-        <td>Move the cursor right a column, but in the same row.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>l</code></td>
-        <td>Move the cursor up a row, and attempt to preserve the column.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>w</code></td>
-        <td>Move the cursor to the start of the next word or special character, ignoring whitespace.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>b</code></td>
-        <td>Move the cursor to the start of the previous word or special character, ignoring whitespace.</td>
-        <td>Navigation</td>
-    </tr>
-    <tr>
-        <td><code>i</code></td>
-        <td>Enter <code>insert mode</code>, the primary typing mode.</td>
-        <td>Insert Mode</td>
-    </tr>
-    <tr>
-        <td><code>I</code></td>
-        <td>Enter <code>insert mode</code> at the start of the current line.</td>
-        <td>Insert Mode</td>
-    </tr>
-    <tr>
-        <td><code>S</code></td>
-        <td>Enter <code>insert mode</code> after clearing the current line.</td>
-        <td>Insert Mode</td>
-    </tr>
-    <tr>
-        <td><code>A</code></td>
-        <td>Enter <code>insert mode</code> at the end of the line.</td>
-        <td>Insert Mode</td>
-    </tr>
-    <tr>
-        <td><code>v</code></td>
-        <td>Enter <code>visual mode</code> (highlighting/selecting) at the cursor’s current location. Select text with navigation keys.</td>
-        <td>Visual Mode</td>
-    </tr>
-    <tr>
-        <td><code>V</code></td>
-        <td>Enter <code>visual mode</code> at the cursor’s current row. <code>j</code> and <code>k</code> are used to select more rows.</td>
-        <td>Visual Mode</td>
-    </tr>
-    <tr>
-        <td><code>y</code></td>
-        <td>Copy highlighted text to Neovim’s clipboard. <strong>NOTE:</strong> Neovim’s clipboard is separate from your system clipboard.</td>
-        <td>Visual Mode</td>
-    </tr>
-    <tr>
-        <td><code>"*y</code></td>
-        <td>Copy highlighted text to your system clipboard.</td>
-        <td>Visual Mode</td>
-    </tr>
-    <tr>
-        <td><code>u</code></td>
-        <td>Undo.</td>
-        <td>Special Function</td>
-    </tr>
-    <tr>
-        <td><code>p</code></td>
-        <td>Paste text from Neovim’s clipboard.</td>
-        <td>Special Function</td>
-    </tr>
-    <tr>
-        <td><code>:Ex</code></td>
-        <td>Enter Neovim’s file explorer, <code>netrw</code>.</td>
-        <td>Enter <code>netrw</code></td>
-    </tr>
-    <tr>
-        <td><code>%</code></td>
-        <td>Create a file inside the current directory.</td>
-        <td><code>netrw</code> keybinds</td>
-    </tr>
-    <tr>
-        <td><code>d</code></td>
-        <td>Create a new directory inside the current directory.</td>
-        <td><code>netrw</code> keybinds</td>
-    </tr>
-    <tr>
-        <td><code>D</code></td>
-        <td>Delete a file or empty directory.</td>
-        <td><code>netrw</code> keybinds</td>
-    </tr>
-    <tr>
-        <td><code>:w {filename}</code></td>
-        <td>Write (save) the current file. You can specify a filename as well.</td>
-        <td>File Management</td>
-    </tr>
-    <tr>
-        <td><code>:q</code></td>
-        <td>Quit (exit without saving) the current file.</td>
-        <td>File Management</td>
-    </tr>
-    <tr>
-        <td><code>:wq</code></td>
-        <td>Write (save) and quit (exit) the current file.</td>
-        <td>File Management</td>
-    </tr>
-    <tr>
-        <td><code>:%s/original/new/g</code></td>
-        <td>The most common command I use, a highly and easily configurable search and replace. The (optional) <code>%</code> means the entire file. By default, it’ll only apply to the current line. <code>original</code> is the current text and <code>new</code> is the replacement. The (optional) <code>g</code> means every instance on each line. By default, it’ll only apply to the first occurrence.</td>
-        <td>Advanced Command</td>
-    </tr>
-    <tr>
-        <td><code>Escape</code></td>
-        <td>Exit current mode.</td>
-        <td>Exit mode</td>
-    </tr>
-</table>
-
-<h4>Nano - TODO</h4>
-
-<h3>Setting Up Programming Languages</h3>
-<p>A broad overview on a handful of languages that you can use with the Raspberry Pi:</p>
-<p>Python is the most commonly used language with the Raspberry Pi. Python is known for its syntactic simplicity for novice programmers...</p>
-
-<h4>Python</h4>
-<ol>
-    <li>Run <code>sudo apt install python</code>.</li>
-    <li>Verify the installation was successful with <code>python --version</code>.</li>
-    <li>Verify that the python package manager was installed with <code>pip --version</code>.</li>
-</ol>
-
-<h2>Git Essentials</h2>
-<p>Git is a critical component of modern software development...</p>
-
-<h3>git clone</h3>
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>git clone https://github.com/&lt;user&gt;/&lt;repo&gt;</code></td>
-        <td>Create a local copy of the remote repo owned by <code>&lt;user&gt;</code> called <code>&lt;repo&gt;</code>.</td>
-    </tr>
-    <tr>
-        <td><code>git clone &lt;remote&gt; &lt;destination&gt;</code></td>
-        <td>Clone a remote repository and save it in a directory called <code>&lt;destination&gt;</code>.</td>
-    </tr>
-</table>
-
-<h3>git stage</h3>
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>git stage -A</code></td>
-        <td>Include all changes in the commit.</td>
-    </tr>
-    <tr>
-        <td><code>git stage &lt;file&gt;</code></td>
-        <td>Add a file you want to include in the commit.</td>
-    </tr>
-</table>
-
-<h3>git commit</h3>
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>git commit</code></td>
-        <td>Open your default text editor to create the commit message. Once you save and quit, a new snapshot of your local repo is saved.</td>
-    </tr>
-    <tr>
-        <td><code>git commit -m “A commit message.”</code></td>
-        <td>Create the snapshot with a commit message.</td>
-    </tr>
-    <tr>
-        <td><code>git commit --all</code></td>
-        <td>This option auto-stages your changes for the commit, so you do not need <code>git stage</code>.</td>
-    </tr>
-</table>
-
-<h3>git push</h3>
-<p><strong>git push</strong> will attempt to upload your commit(s) to the remote repository.</p>
-
-<h3>git pull</h3>
-<p><strong>git pull</strong> will download the latest changes from the remote repository.</p>
-
-<h2>Quality of Life Improvements</h2>
-
-<h3>man</h3>
-<p><strong>man</strong> is used to open instructional information about a particular command, application, or function. The <code>man</code> command is quite powerful, though a touch verbose. It’ll provide information on all possible parameters, uses, and idiosyncrasies.</p>
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>man &lt;command&gt;</code></td>
-        <td>Open the manual for a command, application, or function. Press <code>q</code> to quit, and use <code>j</code> and <code>k</code> to move down and up respectively.</td>
-    </tr>
-</table>
-
-<h3>tldr</h3>
-<p><strong>tldr</strong> is the concise version of <code>man</code>. Personally, I use <code>tldr</code> almost every day. It provides the most common few uses of a command, application, or function.</p>
-<table>
-    <tr>
-        <th>Command</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>tldr &lt;command&gt;</code></td>
-        <td>Get quick information about a command, application, or function.</td>
-    </tr>
-</table>
-
-<h3>zsh</h3>
-<p><strong>zsh</strong> is a shell, effectively the programming language your terminal uses. <code>zsh</code> has more customization options available, such as <code>oh-my-zsh</code>, <code>starship</code>, and much more. Using your programming skills to customize your operating system is a deep rabbit-hole that you should at least be aware of.</p>
-
-<h1>IV - How to unleash the Raspberry Pi’s Potential.</h1>
-
-<h2>Making your own CLI tools</h2>
-<h3>Scripts & automation</h3>
-<h3>Code writing and text creation</h3>
-<h3>Important rules (syntax)</h3>
+    <h1>Raspberry Pi & Linux Guide</h1>
+
+    <h2>I - What is a Raspberry Pi and Linux?</h2>
+
+    <h3>Raspberry Pi</h3>
+
+    <h4>What is it?</h4>
+    <p><a href="https://en.wikipedia.org/wiki/Raspberry_Pi">The Raspberry Pi</a> is a series of small, affordable,
+        single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in collaboration with
+        Broadcom. It’s designed to promote teaching basic computer science and to provide an accessible platform for
+        hobbyists, educators, and students to explore computing, learn programming, and work on various digital
+        projects.</p>
+
+    <h4>Raspberry Pi Projects</h4>
+    <p><a href="https://projects.raspberrypi.org/">Raspberry Pi projects</a> range from simple learning tools to complex
+        systems. Some popular project ideas include:</p>
+    <ul>
+        <li><a href="https://projects.raspberrypi.org/">Coding and Computing</a>: Using Raspberry Pi to learn
+            programming languages like Python and Scratch.</li>
+        <li>Home Automation: Creating smart home devices that can control lighting, temperature, or security systems.
+        </li>
+        <li>Retro Gaming: Building a retro gaming console to play classic games.</li>
+        <li><a href="https://www.tomshardware.com/features/best-raspberry-pi-projects">Robotics</a>: Designing robots
+            that can perform various tasks or respond to the environment.</li>
+        <li>Media Centers: Setting up a media server to stream videos and music throughout your home.</li>
+    </ul>
+
+    <h4>Raspberry Pi Documentation</h4>
+    <p>To read more about the Raspberry Pi, you can visit the official Raspberry Pi website or explore its Wikipedia
+        page for detailed information on its history, models, and specifications. Additionally, there are numerous
+        online communities and forums where Raspberry Pi enthusiasts share their projects and offer support.</p>
+
+    <h3>Linux</h3>
+
+    <h4>What is Linux?</h4>
+    <ul>
+        <li>Linux is an open-source operating system (OS) that has been around since the mid-1990s. It’s part of the
+            Unix-like family of OSes.</li>
+        <li>Unlike proprietary systems like Windows or macOS, Linux is freely redistributable, which means anyone can
+            create their own distribution (distro) for any purpose.</li>
+        <li>The core of Linux is the Linux kernel, which manages the CPU, memory, and peripheral devices. However, when
+            people refer to “Linux,” they often mean the entire OS, including additional software and tools.</li>
+        <li>Linux is everywhere: from smartphones and cars to supercomputers and home appliances. It powers most of the
+            Internet, top supercomputers, and stock exchanges.</li>
+        <li>Android, one of the most popular platforms globally, is also based on the Linux kernel.</li>
+    </ul>
+
+    <h4>Why does the Pi use Linux?</h4>
+    <ul>
+        <li>The Raspberry Pi Foundation has a unique mission: to help young people learn how to use computers and
+            improve their tech skills.</li>
+        <li>They created the Raspberry Pi, an affordable computer (costing less than $50) that can be used in schools.
+            It helps students become more confident with computers and learn programming.</li>
+        <li>However, the Raspberry Pi is different from traditional computers, so a specialized OS was needed. That’s
+            where Raspberry Pi OS (formerly Raspbian) comes in.</li>
+        <li>Raspberry Pi OS is a lightweight Linux distribution designed specifically for Raspberry Pi. It achieves the
+            foundation’s goals by providing a compatible and user-friendly environment for learning and development.
+        </li>
+    </ul>
+
+    <h2>II - How to use Linux</h2>
+
+    <h3>Installation</h3>
+    <p>Install the Raspberry Pi Imager on a computer. This is used to install a .iso file to an SD card or MicroSD card
+        (depending on your Raspberry Pi model). Launch the application and you’ll see the following buttons:</p>
+    <div class="image-container">
+        <img src="img/image1.png" alt="Raspberry Pi Imager Interface">
+    </div>
+    <p>Select your Raspberry Pi device and the storage device connected to your computer.</p>
+
+    <p>For the Operating System, if you have a Raspberry Pi 3 or newer, the top option should be OK. Anything older, and
+        you should choose Raspberry Pi OS (Legacy, 32-bit) Lite. Note that this will not install a Desktop Environment
+        (DE), which means everything you’ll do is through the terminal. That might sound scary, but don’t worry. This
+        guide will go over everything you need to know to hit the ground running.</p>
+
+    <p>Once you hit next, you should see the popup below:</p>
+    <div class="image-container">
+        <img src="img/image2.png" alt="Raspberry Pi Imager Popup">
+    </div>
+
+    <p>Click <strong>EDIT SETTINGS</strong> and <strong>Set username and password</strong>. This is the only setting you
+        <em>should</em> set, but others are available, such as enabling SSH (Secure Shell protocol). For the time being,
+        let’s skip those since they’re not strictly necessary.
+    </p>
+    <div class="image-container">
+        <img src="img/image3.png" alt="Raspberry Pi Settings Edit">
+    </div>
+
+    <p>Now, wait until the installation is complete!</p>
+    <div class="image-container">
+        <img src="img/image4.png" alt="Raspberry Pi Installation Progress">
+    </div>
+
+    <h3>SSH vs. Local</h3>
+    <p>Using a Raspberry Pi with Linux can be experienced in two distinct ways: through SSH (Secure Shell) or locally by
+        connecting a display directly to the Pi. Here’s a comparison of both methods:</p>
+
+    <h4>Using SSH:</h4>
+    <ul>
+        <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Remote Access</a>: SSH allows you to control
+            your Raspberry Pi from another computer on the same network or even over the internet.</li>
+        <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Headless Operation</a>: Ideal for running the
+            Raspberry Pi without a monitor, keyboard, or mouse—useful for servers or embedded projects.</li>
+        <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Convenience</a>: Manage your Pi from the comfort
+            of your main workstation, which is especially handy if the Pi is physically inaccessible.</li>
+        <li><a href="https://randomnerdtutorials.com/raspberry-pi-remote-ssh-vs-code/">Development</a>: Tools like VS
+            Code can connect to the Pi via SSH, enabling you to write and execute code remotely.</li>
+        <li><a href="https://raspberrytips.com/ssh-guide-raspberry-pi/">Security</a>: SSH provides encrypted
+            communication, ensuring that your commands and data are secure during transmission.</li>
+    </ul>
+
+    <h4>Using Locally:</h4>
+    <ul>
+        <li>Full Desktop Experience: When a display is connected, you can use the Raspberry Pi’s graphical user
+            interface (GUI) for a complete desktop experience.</li>
+        <li>Peripheral Interaction: Directly interact with connected devices such as keyboards, mice, or other USB
+            peripherals.</li>
+        <li>Educational Use: For learning and teaching, having a monitor connected can be more engaging and easier for
+            beginners.</li>
+        <li>No Network Required: Local use doesn’t depend on network connectivity, which can be beneficial in
+            environments with poor or no network access.</li>
+    </ul>
+
+    <p>If you are going to utilize SSH, please be sure to check that option in the settings page when you are
+        installing, though this can be enabled in the future.</p>
+
+    <h2>III - The Power of the Linux Terminal</h2>
+
+    <h3>Why use a terminal?</h3>
+    <p>A command is just an application. Some commands open a window (a Graphical User Interface or GUI) while others
+        remain in the terminal (referred to as Command-Line Interface or CLI). Many developers create applications that
+        live in the terminal because, frankly, it’s a lot less work. What this means is that small, specialized tools
+        are widely available on Linux since someone likely has already made it.</p>
+
+    <p>While there are many, many more commands, this guide will stick to the essentials to get you up and running
+        quickly. The essentials have been divided into the following categories:</p>
+    <ul>
+        <li>File Operations</li>
+        <li>Permissions</li>
+        <li>Installing Applications</li>
+        <li>Coding</li>
+        <li>Git Essentials</li>
+        <li>Miscellaneous</li>
+    </ul>
+
+    <p>These commands can be accessed in the terminal and can have many different options (called parameters outside of
+        a program, arguments inside a program). Google is your friend here, but an even better friend is
+        <code>tldr</code>. It provides simple and concise explanations of commands with examples for the most common
+        uses of those commands.
+    </p>
+
+    <p>Learning these commands will take time. It will at times be frustrating. Like anything worthwhile, it takes time,
+        practice, and patience.</p>
+
+    <h3>Essential Terminal Commands</h3>
+    <p>Most commands have different parameters, some optional and some required. This guide will only cover the most
+        common uses of the most common commands. Use <code>tldr</code> command to get more uses for a command. Use
+        <code>man</code> command to get detailed information and all parameters for a command.
+    </p>
+
+    <p>For most commands, either a full path or relative path may be used for input/output files and directories. Make
+        sure to consider your user access to paths as well. For a command with input and/or output parameters, the input
+        must be a file/directory that your user has access to read. The output must be a file/directory that your user
+        has access to write to.</p>
+
+    <p>Most commands also support wildcard characters. Once you’re familiar with commands, start experimenting with
+        wildcards. Start by reading more <a
+            href="https://www.fosslinux.com/44230/wildcards-in-linux-examples.htm">here</a>.</p>
+
+    <h4>File Operations</h4>
+
+    <h5>cd</h5>
+    <p><code>cd</code> is by far the most commonly used command line utility. This changes what directory you are
+        currently in.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>cd</code></td>
+            <td>Go to your home directory, /home/username.</td>
+        </tr>
+        <tr>
+            <td><code>cd ~</code></td>
+            <td>Go to your home directory, /home/username.</td>
+        </tr>
+        <tr>
+            <td><code>cd /home/username/directory</code></td>
+            <td>Go to a specific directory by providing a full path.</td>
+        </tr>
+        <tr>
+            <td><code>cd directory</code></td>
+            <td>Go to a directory that is in your current directory.</td>
+        </tr>
+    </table>
+
+    <h5>ls</h5>
+    <p><code>ls</code> is the second most used command. This command will list files and directories in your current
+        location by default, but there are multiple options.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>ls</code></td>
+            <td>Lists files and directories in your current directory.</td>
+        </tr>
+        <tr>
+            <td><code>ls -l</code></td>
+            <td>Include more information like ownership and permissions.</td>
+        </tr>
+        <tr>
+            <td><code>ls -la</code></td>
+            <td>Include hidden files and directories.</td>
+        </tr>
+        <tr>
+            <td><code>ls -la directory</code></td>
+            <td>List all files and information for a specific directory.</td>
+        </tr>
+    </table>
+
+    <h5>mkdir</h5>
+    <p><code>mkdir</code> is used to create a new directory or folder, or many directories at once.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>mkdir a-directory</code></td>
+            <td>Create a new directory.</td>
+        </tr>
+        <tr>
+            <td><code>mkdir a-directory b-directory ...</code></td>
+            <td>Make multiple directories.</td>
+        </tr>
+    </table>
+
+    <h5>touch</h5>
+    <p><code>touch</code> has multiple uses. The primary use is to create new file(s). The secondary use is to update
+        the last-accessed timestamp of a file. Note that this command does not create directories, but will update the
+        timestamp of a directory.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>touch file.txt</code></td>
+            <td>Create (or update the access timestamp) a file.</td>
+        </tr>
+        <tr>
+            <td><code>touch file.txt a-directory ...</code></td>
+            <td>Create/update a file and update a directory.</td>
+        </tr>
+    </table>
+
+    <h5>cp</h5>
+    <p><code>cp</code> copies a file(s)/directory(ies) to a destination directory. This copies the permissions as well
+        as the file contents themselves. cp writes over any existing output file as well.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>cp input-file output-file</code></td>
+            <td>Copy the input file and create/write the output file.</td>
+        </tr>
+        <tr>
+            <td><code>cp a-input b-input directory</code></td>
+            <td>Copy multiple files into one output directory.</td>
+        </tr>
+        <tr>
+            <td><code>cp -r input-directory output-directory</code></td>
+            <td>Create a copy of the input directory with the output’s name.</td>
+        </tr>
+    </table>
+
+    <h5>mv</h5>
+    <p><code>mv</code> moves a file(s)/directory(ies) to a target destination. This can be used to rename a file or
+        directory, or move file(s)/directory(ies) into another location.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>mv input-file directory</code></td>
+            <td>Move the input file into the directory.</td>
+        </tr>
+        <tr>
+            <td><code>mv a-input b-input directory</code></td>
+            <td>Move multiple files into one directory.</td>
+        </tr>
+        <tr>
+            <td><code>mv input-name output-name</code></td>
+            <td>Rename a directory/file.</td>
+        </tr>
+    </table>
+
+    <h5>rm</h5>
+    <p><code>rm</code> is the delete command, and can remove one or more files at once, and can be used to delete
+        directories as well.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>rm input-file</code></td>
+            <td>Remove a file.</td>
+        </tr>
+        <tr>
+            <td><code>rm a-input b-input</code></td>
+            <td>Remove multiple files at once.</td>
+        </tr>
+        <tr>
+            <td><code>rm -r a-directory</code></td>
+            <td>Remove a directory.</td>
+        </tr>
+    </table>
+
+    <h2>Permissions</h2>
+
+    <h3>sudo</h3>
+    <p><strong>sudo</strong> allows a command to be run as the root user (see II - How to use Linux). This is most
+        commonly used in conjunction with your package manager (see Installing Applications), but there are many use
+        cases where you’ll want to use it. From editing system configuration files to executing system commands, in
+        Windows terms <code>sudo</code> elevates your command to be run as the Administrator.</p>
+    <p>Related: <code>su</code></p>
+    <p>Association: <strong>s</strong>witch <strong>u</strong>ser and <strong>do</strong> || <strong>s</strong>uper
+        <strong>u</strong>ser and <strong>do</strong>
+    </p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>sudo nvim /usr/local/bin/a-custom-script</code></td>
+            <td>Since a regular user doesn’t have permission to edit a file in <code>/usr/local/bin</code>, switch to
+                the root user to edit the file.</td>
+        </tr>
+        <tr>
+            <td><code>sudo apt install firefox</code></td>
+            <td>Installing, updating, upgrading, and removing packages requires <code>sudo</code> (see Apps).</td>
+        </tr>
+        <tr>
+            <td><code>sudo cp new-script /usr/local/bin</code></td>
+            <td>Copy a new script to a globally accessible script location (see IV - Making your own CLI tools).</td>
+        </tr>
+    </table>
+
+    <h2>Apps</h2>
+
+    <h3>Package Manager == App Store</h3>
+    <p>A package manager is an app store (in coding, the ‘==’ operation is a boolean expression meaning the left and
+        right are the same value). There are a few important differences though.</p>
+    <ul>
+        <li>A package manager is “distro-dependent”, meaning it is only available to and is designed for specific Linux
+            distributions and families. A package manager can also be available and designed for use for a specific
+            programming language as well (see Setting Up Programming Languages).</li>
+        <li>A package manager is usually a <strong>C</strong>ommand <strong>L</strong>ine <strong>I</strong>nterface,
+            meaning that your interaction with it is limited to the terminal.</li>
+        <li>If an application is already installed and you attempt to re-install it, the exact behavior can vary but
+            either the package manager aborts the operation or it re-installs the app.</li>
+    </ul>
+
+    <h4>Raspberry Pi</h4>
+    <p>For the Raspberry Pi, the package manager is <strong>A</strong>dvanced <strong>P</strong>ackage
+        <strong>T</strong>ool, commonly called <code>apt</code>. Packages are applications, with all dependencies and
+        instructions already set up.
+    </p>
+    <p>The <code>install</code> and <code>upgrade</code> sub-commands will typically require some input from you. This
+        comes in the form of simple <code>Y</code> or <code>N</code> prompts typically.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>sudo apt update</code></td>
+            <td>Check if any packages have a new version available.</td>
+        </tr>
+        <tr>
+            <td><code>sudo apt install firefox</code></td>
+            <td>Install the Firefox web browser.</td>
+        </tr>
+        <tr>
+            <td><code>sudo apt remove firefox</code></td>
+            <td>Uninstall the Firefox web browser.</td>
+        </tr>
+        <tr>
+            <td><code>sudo apt upgrade</code></td>
+            <td>Upgrade every package installed with <code>apt</code> to the latest version.</td>
+        </tr>
+        <tr>
+            <td><code>apt search firefox</code></td>
+            <td>Find a package based upon search criteria.</td>
+        </tr>
+    </table>
+
+    <h2>Coding</h2>
+
+    <p>Linux is a programmer’s playground. Writing code that will modify your system, create applications, and CLI
+        tools, are all easily accessible through Linux. This section will cover how you can write code in the terminal,
+        and how you can run that code.</p>
+
+    <h3>Text Editor</h3>
+
+    <h4>NeoVim</h4>
+    <p>High-level, Neovim is a customizable and extensible text editor. You can either install a pre-configured Neovim
+        distro (like <a href="https://www.lunarvim.org/">LunarVim</a>, <a href="https://astronvim.com/">AstroNvim</a>,
+        or <a href="https://www.lazyvim.org/">LazyVim</a>) or start from scratch. While you’re learning, a
+        pre-configured distro is going to smooth the learning curve and is the general recommendation for starting out
+        with Neovim. It’ll include modern conveniences like auto-complete, GitHub Copilot, warnings and errors, and
+        more.</p>
+    <p>Eventually, creating a custom configuration is ideal but ultimately not necessary. The keybindings below are the
+        same across distributions. Additionally, most servers will have at least Vi (an ancestor of Neovim) installed.
+        Part of the power of Neovim (and its ancestors Vi and Vim) is the modal interface. Fancy words aside, this just
+        means that you only operate within different modes. In different modes, the keybindings change. This will only
+        cover the most common and necessary keybinds and commands.</p>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+            <th>Category</th>
+        </tr>
+        <tr>
+            <td><code>nvim</code></td>
+            <td>Open a new file. The file is created with its contents once you save.</td>
+            <td>Basic file creation</td>
+        </tr>
+        <tr>
+            <td><code>nvim file.txt</code></td>
+            <td>Open a file called <code>file.txt</code>.</td>
+            <td>Open a file</td>
+        </tr>
+        <tr>
+            <td><code>nvim .</code></td>
+            <td>Open the current directory in Neovim, using netrw.</td>
+            <td>Enter <code>netrw</code></td>
+        </tr>
+        <tr>
+            <td><code>nvim a-directory</code></td>
+            <td>Open a directory from a path, using netrw.</td>
+            <td>Enter <code>netrw</code></td>
+        </tr>
+    </table>
+
+    <h5>Keybinds:</h5>
+    <p>Part of the power of Neovim is repeatable commands. The commands below can have a number prefix to indicate how
+        many times to perform that command. Eg. <code>50j</code> in command mode translates to moving 50 lines down.</p>
+
+    <table>
+        <tr>
+            <th>Keybind</th>
+            <th>Description</th>
+            <th>Category</th>
+        </tr>
+        <tr>
+            <td><code>h</code></td>
+            <td>Move the cursor left a column, but in the same row.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>j</code></td>
+            <td>Move the cursor down a row, and attempt to preserve the column.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>k</code></td>
+            <td>Move the cursor right a column, but in the same row.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>l</code></td>
+            <td>Move the cursor up a row, and attempt to preserve the column.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>w</code></td>
+            <td>Move the cursor to the start of the next word or special character, ignoring whitespace.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>b</code></td>
+            <td>Move the cursor to the start of the previous word or special character, ignoring whitespace.</td>
+            <td>Navigation</td>
+        </tr>
+        <tr>
+            <td><code>i</code></td>
+            <td>Enter <code>insert mode</code>, the primary typing mode.</td>
+            <td>Insert Mode</td>
+        </tr>
+        <tr>
+            <td><code>I</code></td>
+            <td>Enter <code>insert mode</code> at the start of the current line.</td>
+            <td>Insert Mode</td>
+        </tr>
+        <tr>
+            <td><code>S</code></td>
+            <td>Enter <code>insert mode</code> after clearing the current line.</td>
+            <td>Insert Mode</td>
+        </tr>
+        <tr>
+            <td><code>A</code></td>
+            <td>Enter <code>insert mode</code> at the end of the line.</td>
+            <td>Insert Mode</td>
+        </tr>
+        <tr>
+            <td><code>v</code></td>
+            <td>Enter <code>visual mode</code> (highlighting/selecting) at the cursor’s current location. Select text
+                with navigation keys.</td>
+            <td>Visual Mode</td>
+        </tr>
+        <tr>
+            <td><code>V</code></td>
+            <td>Enter <code>visual mode</code> at the cursor’s current row. <code>j</code> and <code>k</code> are used
+                to select more rows.</td>
+            <td>Visual Mode</td>
+        </tr>
+        <tr>
+            <td><code>y</code></td>
+            <td>Copy highlighted text to Neovim’s clipboard. <strong>NOTE:</strong> Neovim’s clipboard is separate from
+                your system clipboard.</td>
+            <td>Visual Mode</td>
+        </tr>
+        <tr>
+            <td><code>"*y</code></td>
+            <td>Copy highlighted text to your system clipboard.</td>
+            <td>Visual Mode</td>
+        </tr>
+        <tr>
+            <td><code>u</code></td>
+            <td>Undo.</td>
+            <td>Special Function</td>
+        </tr>
+        <tr>
+            <td><code>p</code></td>
+            <td>Paste text from Neovim’s clipboard.</td>
+            <td>Special Function</td>
+        </tr>
+        <tr>
+            <td><code>:Ex</code></td>
+            <td>Enter Neovim’s file explorer, <code>netrw</code>.</td>
+            <td>Enter <code>netrw</code></td>
+        </tr>
+        <tr>
+            <td><code>%</code></td>
+            <td>Create a file inside the current directory.</td>
+            <td><code>netrw</code> keybinds</td>
+        </tr>
+        <tr>
+            <td><code>d</code></td>
+            <td>Create a new directory inside the current directory.</td>
+            <td><code>netrw</code> keybinds</td>
+        </tr>
+        <tr>
+            <td><code>D</code></td>
+            <td>Delete a file or empty directory.</td>
+            <td><code>netrw</code> keybinds</td>
+        </tr>
+        <tr>
+            <td><code>:w {filename}</code></td>
+            <td>Write (save) the current file. You can specify a filename as well.</td>
+            <td>File Management</td>
+        </tr>
+        <tr>
+            <td><code>:q</code></td>
+            <td>Quit (exit without saving) the current file.</td>
+            <td>File Management</td>
+        </tr>
+        <tr>
+            <td><code>:wq</code></td>
+            <td>Write (save) and quit (exit) the current file.</td>
+            <td>File Management</td>
+        </tr>
+        <tr>
+            <td><code>:%s/original/new/g</code></td>
+            <td>The most common command I use, a highly and easily configurable search and replace. The (optional)
+                <code>%</code> means the entire file. By default, it’ll only apply to the current line.
+                <code>original</code> is the current text and <code>new</code> is the replacement. The (optional)
+                <code>g</code> means every instance on each line. By default, it’ll only apply to the first occurrence.
+            </td>
+            <td>Advanced Command</td>
+        </tr>
+        <tr>
+            <td><code>Escape</code></td>
+            <td>Exit current mode.</td>
+            <td>Exit mode</td>
+        </tr>
+    </table>
+
+    <h4>Nano - TODO</h4>
+
+    <h3>Setting Up Programming Languages</h3>
+    <p>A broad overview on a handful of languages that you can use with the Raspberry Pi:</p>
+    <p>Python is the most commonly used language with the Raspberry Pi. Python is known for its syntactic simplicity for
+        novice programmers...</p>
+
+    <h4>Python</h4>
+    <ol>
+        <li>Run <code>sudo apt install python</code>.</li>
+        <li>Verify the installation was successful with <code>python --version</code>.</li>
+        <li>Verify that the python package manager was installed with <code>pip --version</code>.</li>
+    </ol>
+
+    <h2>Git Essentials</h2>
+    <p>Git is a critical component of modern software development...</p>
+
+    <h3>git clone</h3>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>git clone https://github.com/&lt;user&gt;/&lt;repo&gt;</code></td>
+            <td>Create a local copy of the remote repo owned by <code>&lt;user&gt;</code> called
+                <code>&lt;repo&gt;</code>.
+            </td>
+        </tr>
+        <tr>
+            <td><code>git clone &lt;remote&gt; &lt;destination&gt;</code></td>
+            <td>Clone a remote repository and save it in a directory called <code>&lt;destination&gt;</code>.</td>
+        </tr>
+    </table>
+
+    <h3>git stage</h3>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>git stage -A</code></td>
+            <td>Include all changes in the commit.</td>
+        </tr>
+        <tr>
+            <td><code>git stage &lt;file&gt;</code></td>
+            <td>Add a file you want to include in the commit.</td>
+        </tr>
+    </table>
+
+    <h3>git commit</h3>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>git commit</code></td>
+            <td>Open your default text editor to create the commit message. Once you save and quit, a new snapshot of
+                your local repo is saved.</td>
+        </tr>
+        <tr>
+            <td><code>git commit -m “A commit message.”</code></td>
+            <td>Create the snapshot with a commit message.</td>
+        </tr>
+        <tr>
+            <td><code>git commit --all</code></td>
+            <td>This option auto-stages your changes for the commit, so you do not need <code>git stage</code>.</td>
+        </tr>
+    </table>
+
+    <h3>git push</h3>
+    <p><strong>git push</strong> will attempt to upload your commit(s) to the remote repository.</p>
+
+    <h3>git pull</h3>
+    <p><strong>git pull</strong> will download the latest changes from the remote repository.</p>
+
+    <h2>Quality of Life Improvements</h2>
+
+    <h3>man</h3>
+    <p><strong>man</strong> is used to open instructional information about a particular command, application, or
+        function. The <code>man</code> command is quite powerful, though a touch verbose. It’ll provide information on
+        all possible parameters, uses, and idiosyncrasies.</p>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>man &lt;command&gt;</code></td>
+            <td>Open the manual for a command, application, or function. Press <code>q</code> to quit, and use
+                <code>j</code> and <code>k</code> to move down and up respectively.
+            </td>
+        </tr>
+    </table>
+
+    <h3>tldr</h3>
+    <p><strong>tldr</strong> is the concise version of <code>man</code>. Personally, I use <code>tldr</code> almost
+        every day. It provides the most common few uses of a command, application, or function.</p>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>tldr &lt;command&gt;</code></td>
+            <td>Get quick information about a command, application, or function.</td>
+        </tr>
+    </table>
+
+    <h3>zsh</h3>
+    <p><strong>zsh</strong> is a shell, effectively the programming language your terminal uses. <code>zsh</code> has
+        more customization options available, such as <code>oh-my-zsh</code>, <code>starship</code>, and much more.
+        Using your programming skills to customize your operating system is a deep rabbit-hole that you should at least
+        be aware of.</p>
+
+    <h1>IV - How to unleash the Raspberry Pi’s Potential.</h1>
+
+    <p><strong>Here is an example script (found <a href="https://github.com/SLCPL-CreativeLab/ras-pi/scripts">here</a>)
+            which gets your Raspberry Pi setup with some common services.</strong></p>
+    <pre class="code">
+        <code>
+            #!/bin/bash
+
+            # This script gets a Raspberry Pi setup with essential applications.
+            #
+            # For explanations of commands, visit raspi.vintagecoding.net
+
+            # GLOBAL VARIABLES
+            DOMAIN=""
+            MANUAL_PORT=5090
+            JELLYFIN_PORT=5091
+            OLLAMA_PORT=5092
+
+            # This function initializes core services and packages for getting started.
+            init() {
+                # Update repositories and upgrade installed packages.
+                sudo apt update && sudo apt upgrade;
+
+                # Install requisite packages for cloudflared.
+                sudo apt install curl lsb-release;
+
+                # Add cloudflare gpg key
+                sudo mkdir -p --mode=0755 /usr/share/keyrings
+                curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg > /dev/null
+
+                # Add this repo to your apt repositories
+                echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+                # install cloudflared
+                sudo apt-get update && sudo apt-get install cloudflared
+
+                # Install cloudflared.
+                # Install podman, a container technology for easily deploying projects.
+                # Install golang, a server-side programming language.
+                # Install tools for the user
+                sudo apt update;
+                sudo apt install cloudflared podman golang tldr neovim;
+
+                # Get user input for some default applications to get started.
+                read -p "Do you want a mirror of the manual from raspi.vintagecoding.net on this device? (y/N): " MANUAL;
+                MANUAL=$(echo "$MANUAL" | tr '[:upper:]' '[:lower:]')
+                if [[ -z "$MANUAL" || "$MANUAL" == "n" ]]; then
+                    MANUAL="n"
+                else
+                    init_manual;
+                fi
+
+                read -p "Do you want to setup Jellyfin, a personal Netflix alternative? (y/N): " JELLYFIN;
+                JELLYFIN=$(echo "$JELLYFIN" | tr '[:upper:]' '[:lower:]')
+                if [[ -z "$JELLYFIN" || "$JELLYFIN" == "n" ]]; then
+                    JELLYFIN="n"
+                else
+                    init_jellyfin;
+                fi
+
+                read -p "Do you want to setup Ollama, a personal ChatGPT alternative? (y/N): " OLLAMA;
+                OLLAMA=$(echo "$OLLAMA" | tr '[:upper:]' '[:lower:]')
+                if [[ -z "$OLLAMA" || "$OLLAMA" == "n" ]]; then
+                    OLLAMA="n"
+                else
+                    init_ollama;
+                fi
+
+            }
+
+            # This function initializes the manual mirror of raspi.vintagecoding.net
+            init_manual() {
+                cd ~/ras-pi/man/pages;
+
+                # This creates what's called a systemd service. These are processes that you create which can start after a reboot.
+                echo "[Unit]
+                Description=Raspberry Pi Manual Mirror
+                After=network.target
+                StartLimitIntervalSec=0
+
+                [Service]
+                Type=simple
+                Restart=always
+                RestartSec=1
+                User=$(whoami)
+                WorkingDirectory=$(pwd)
+                ExecStartPre=/usr/bin/git pull
+                ExecStart=/usr/bin/python3 -m http.server $MANUAL_PORT
+
+                [Install]
+                WantedBy=multi-user.target" | sudo tee /etc/systemd/system/manual.service;
+
+                sudo systemctl enable manual.service;
+                sudo systemctl start manual.service;
+                sudo systemctl daemon-reload;
+            }
+
+            # This function initializes Jellyfin.
+            init_jellyfin() {
+                # Get the official image of Jellyfin software
+                podman pull ghcr.io/jellyfin/jellyfin;
+
+                echo "Making media directories where Jellyfin will retrieve content.";
+                echo "It is up to you to provide supported files and build a library.";
+
+                cd;
+                mkdir media;
+
+                podman run \
+                    --detach \
+                    --label "io.containers.autoupdate=registry" \
+                    --name myjellyfin \
+                    --publish $JELLYFIN_PORT:8096/tcp \
+                    --user $(id -u):$(id -g) \
+                    --volume jellyfin-cache:/cache:Z \
+                    --volume jellyfin-config:/config:Z \
+                    --mount type=bind,source=/$HOME/media,destination=/media,ro=true,relabel=private \
+                    --restart always \
+                ghcr.io/jellyfin/jellyfin;
+
+                echo "Finished creating the Jellyfin container! It is now live on";
+                echo "http://localhost:$JELLYFIN_PORT. If you enabled it, it'll also be";
+                echo "available at media.yourdomain.com.";
+            }
+
+            # This function initializes Ollama.
+            init_ollama() {
+                echo "This will take a while...";
+
+                cd;
+                curl -fsSL https://ollama.com/install.sh | sh;
+                export OLLAMA_BASE_URL=http://localhost:11434;
+
+                read -p "Do you want to require a login for your AI? (n/Y): " REQUIRE_LOGIN;
+                REQUIRE_LOGIN=$(echo "$REQUIRE_LOGIN" | tr '[:upper:]' '[:lower:]')
+                if [[ -z "$REQUIRE_LOGIN" || "$REQUIRE_LOGIN" == "n" ]]; then
+                    export WEBUI_AUTH=False;
+                fi
+
+                source $HOME/.bashrc
+
+                # TODO: Write a script so this can be daemonized.
+                python -m venv open-webui-env;
+                source open-webui-env/bin/activate
+                pip install open-webui;
+
+                echo "server {
+                    listen 80; #or whatever port your open-webui backend is running on.
+                    server_name localhost;
+
+                    location / {
+                        proxy_pass http://localhost:$OLLAMA_PORT/;
+                        proxy_http_version 1.1;
+                        proxy_set_header Upgrade $http_upgrade;
+                        proxy_set_header Connection 'upgrade';
+                        proxy_set_header Host $host;
+                        proxy_cache_bypass $http_upgrade;
+                    }
+                    location /api/ {
+                        proxy_pass http://localhost:$OLLAMA_PORT/api/; # Ensure the trailing slash is present
+                        proxy_http_version 1.1;
+                        proxy_set_header Upgrade $http_upgrade;
+                        proxy_set_header Connection 'upgrade';
+                        proxy_set_header Host $host;
+                        proxy_cache_bypass $http_upgrade;
+                    }
+                }" | sudo tee/etc/nginx/sites-available/open-webui;
+                sudo ln -s /etc/nginx/sites-available/open-webui /etc/nginx/sites-enabled
+                sudo systemctl enable nginx;
+                sudo systemctl start nginx;
+
+                open-webui serve --port $OLLAMA_PORT &
+            }
+
+            init;
+        </code>
+    </pre>
 
 </body>
+
 </html>
