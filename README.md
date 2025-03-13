@@ -17,17 +17,21 @@ sudo ./cloudflared.sh;
 ```
 
 <h3>Expose Services to the Internet</h3>
-To enable cloudflared to expose services to the internet, you must
-  - Make a Cloudflare account & purchase a domain;
-  - Run the command `cloudflared tunnel login`;
-  - Run the command ./cloudflared.sh in ~/ras-pi/scripts;
+To enable cloudflared to expose services to the internet, you must:<br>
+<ul>
+    <li>Make a Cloudflare account & purchase a domain</li>
+    <li>Run the command `cloudflared tunnel login`</li>
+    <li>Run the command ./cloudflared.sh in ~/ras-pi/scripts</li>
+</ul>
 
 To temporarily expose a single service to the internet, use this
 command: `cloudflared tunnel --url=http://localhost:PORT`, where
 PORT is the service you'd like to expose. The ports used with the
-standard services are:
-  - 5090 (the manual mirror of raspi.vintagecoding.net)
-  - 5091 (the AI web application)
-  - 5092 (the personal Netflix replacement)
+standard services are:<br>
+<ul>
+  <li>5090 (the manual mirror of raspi.vintagecoding.net)</li>
+  <li>5091 (the AI web application)</li>
+  <li>5092 (the personal Netflix replacement)</li>
+</ul>
 
 See `cloudflared.md` for more information.
