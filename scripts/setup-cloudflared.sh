@@ -44,26 +44,22 @@ cloudflared tunnel route dns $TUNNEL_ID raspi.$DOMAIN;
 cloudflared tunnel route dns $TUNNEL_ID media.$DOMAIN;
 cloudflared tunnel route dns $TUNNEL_ID ai.$DOMAIN;
 	
-ACTUAL_USER=$(whoami)
-
 echo "[Unit]
 Description=Cloudflare Tunnel Daemon
 After=network.target
 
 [Service]
 Type=simple
-User=$ACTUAL_USER
+User=$(whoami)
 ExecStart=/usr/bin/cloudflared tunnel run raspi
 Restart=always
 
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/cloudflared.service;
 
-sudo systemctl enable cloudflared.service;
-
-source ~/.bashrc;
+sudo systemctl daemon-reload && sudo systemctl enable cloudflared.service && sudo systemctl start cloudflared.service;
 
 sudo sed -i -e 's/server_name localhost/servername ai.$DOMAIN/' /etc/nginx/sites-available/open-webui;
+sudo sed -i -e 's/WEBUI_BASE_URL=localhost/WEBUI_BASE_URL=https://ai.$DOMAIN/' /etc/systemd/system/open-webui.service;
 
-export WEBUI_BASE_URL=ai.$DOMAIN >> $HOME/.bashrc;
-sudo systemctl restart open-webui.service;
+sudo systemctl daemon-reload && sudo systemctl restart open-webui.service;

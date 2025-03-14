@@ -14,17 +14,6 @@ if [[ -z "$PI_VERSION" || "$PI_VERSION" == "n" ]]; then
 	exit;
 fi
 
-echo "Adding environment variables. For more information, visist raspi.vintagecoding.net#env-vars";
-echo "export OLLAMA_BASE_URL=http://localhost:$OLLAMA_PORT;"; >> $HOME/.bashrc;
-
-read -p "Do you want to require login to your AI? (n/Y)" REQUIRE_LOGIN
-REQUIRE_LOGIN=$(echo "$REQUIRE_LOGIN" | tr '[:upper:]' '[:lower:]')
-if [[ -z "$REQUIRE_LOGIN" || "$REQUIRE_LOGIN" == "n" ]]; then
-	export WEBUI_AUTH=False >> $HOME/.bashrc;
-fi
-
-source $HOME/.bashrc
-
 echo "Running `python -m venv open-webui-env`. This creates a Python virtual environment, where";
 echo "we can install applications in an isolated manner from the rest of our Operating System (OS).";
 python -m venv open-webui-env;
@@ -41,7 +30,7 @@ server_name localhost;
 location / {
 	proxy_pass http://localhost:$OPEN_WEBUI_PORT/;
 	proxy_http_version 1.1;
-	proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Upgrade $http_upgrade;
 	proxy_set_header Connection 'upgrade';
 	proxy_set_header Host $host;
 	proxy_cache_bypass $http_upgrade;
@@ -74,6 +63,9 @@ Type=simple
 Restart=always
 RestartSec=1
 User=$(whoami)
+Environment=WEBUI_AUTH=True
+Environment=WEBUI_BASE_URL=https://TMP_URL
+Environment=OLLAMA_BASE_URL=http://localhost:11434
 WorkingDirectory=$HOME
 ExecStartPre=/bin/bash -c "source /home/$(whoami)/open-webui-env/bin/activate"
 ExecStart=/home/$(whoami)/open-webui/open-webui-env/bin/open-webui serve --port $OLLAMA_PORT
@@ -81,4 +73,10 @@ ExecStart=/home/$(whoami)/open-webui/open-webui-env/bin/open-webui serve --port 
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/open-webui.service;
 
-sudo systemctl daemon-reload && sudo systemctl enable open-webui.service;
+read -p "Do you want to require login to your AI? (n/Y)" REQUIRE_LOGIN
+REQUIRE_LOGIN=$(echo "$REQUIRE_LOGIN" | tr '[:upper:]' '[:lower:]')
+if [[ -z "$REQUIRE_LOGIN" || "$REQUIRE_LOGIN" == "n" ]]; then
+	sudo sed -i -e 's/WEBUI_AUTH=True/WEBUI_AUTH=False/' /etc/systemd/system/open-webui.service;
+fi
+
+sudo systemctl daemon-reload && sudo systemctl enable open-webui.service && sudo systemctl start open-webui.service;

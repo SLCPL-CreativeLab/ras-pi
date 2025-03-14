@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$JELLYFIN_PORT=5091;
+JELLYFIN_PORT=5091;
 
 # Get the official image of Jellyfin software.
 echo "Running `podman pull ghcr.io/jellyfin/jellyfin`";
@@ -58,6 +58,6 @@ ExecStart=/usr/bin/podman start myjellyfin
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/jellyfin.service;
 
-sudo systemctl daemon-reload && sudo systemctl enable jellyfin.service;
+sudo systemctl daemon-reload && sudo systemctl enable jellyfin.service && sudo systemctl start jellyfin.service;
 
 echo "For now, please visit jellyfin.org/docs for information about setting up Jellyfin. We'll have a more comprehensive guide soon.";
